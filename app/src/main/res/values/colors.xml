@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="colorTopBar">#3b5998</color>
+    <color name="colorStatusBar">#3b5998</color>
+
+    <color name="colorNavBar">#ffffff</color>
+    <color name="colorNavBarUnchecked">#c0c3ca</color>
+    <color name="colorNavBarChecked">#4d92fd</color>
+
+    <color name="colorBackground">#ffffff</color>
+    <color name="colorCardBackground">#f7f7f7</color>
+
+    <color name="colorDateText">#666666</color>
+
+    <color name="colorSubjectText">#000000</color>
+    <color name="colorWaitTimeText">#00BC6C</color>
+    <color name="colorCommonText">#14394F</color>
+    <!-- GREEN FOR WAIT TIME #00BC6C -->
 </resources>

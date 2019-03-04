@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   xmlns:tools="http://schemas.android.com/tools"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:layout_marginTop="10dp"
+>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:paddingLeft="6dp" android:paddingRight="6dp"
+            android:paddingTop="6dp" android:paddingBottom="6dp">
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/subject" tools:text="Обществознание"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="18sp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeStepGranularity="2sp" android:textColor="@color/colorSubjectText"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                    android:text="Кабинет 301"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/cabinet" android:textAlignment="viewStart"
+                    android:textColor="@color/colorCommonText"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/duration" tools:text="8:00 - 9:30"
+                    android:textAlignment="viewStart" android:textColor="@color/colorCommonText"/>
+        </LinearLayout>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" tools:text="Джалагония М.Ш." android:id="@+id/who"
+                android:textAlignment="viewStart" android:textColor="@color/colorCommonText"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/waitTime" tools:text="Начало через 5 мин."
+                android:textColor="@color/colorWaitTimeText"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

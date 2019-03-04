@@ -1,12 +1,8 @@
 package com.shepelevkirill.rksi.model.core.models
 
 import com.google.gson.annotations.SerializedName
-import java.time.LocalDate
-import java.time.LocalTime
-
-data class SchedulesModel(
-    val schedules: List<ScheduleModel>
-)
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
 
 data class ScheduleModel(
     val date: LocalDate,
@@ -16,6 +12,9 @@ data class ScheduleModel(
 data class SubjectModel(
     @SerializedName("tt_gr")
     val group: String,
+
+    @SerializedName("tt_date")
+    val date: LocalDate,
 
     @SerializedName("tt_start")
     val startTime: LocalTime,

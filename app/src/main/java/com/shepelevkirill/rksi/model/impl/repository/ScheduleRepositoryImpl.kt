@@ -1,11 +1,8 @@
 package com.shepelevkirill.rksi.model.impl.repository
-import com.shepelevkirill.rksi.model.core.models.GroupsModel
+
 import com.shepelevkirill.rksi.model.core.models.ScheduleModel
-import com.shepelevkirill.rksi.model.core.models.SchedulesModel
-import com.shepelevkirill.rksi.model.core.models.TeachersModel
 import com.shepelevkirill.rksi.model.core.repository.ScheduleRepository
 import com.shepelevkirill.rksi.model.impl.network.Api
-import io.reactivex.Observable
 import io.reactivex.Single
 
 class ScheduleRepositoryImpl(private val api: Api) : ScheduleRepository {
@@ -18,20 +15,31 @@ class ScheduleRepositoryImpl(private val api: Api) : ScheduleRepository {
         return api.getTeachers()
     }
 
-    override fun getScheduleForGroup(group: String): Single<SchedulesModel> {
-        var index = -1
-            TODO()
+    override fun getScheduleForGroup(group: String): Single<List<ScheduleModel>> {
+        return getGroups().flatMap {
+            val index = it.indexOf(group)
+            if (index == -1) {
+                throw NoSuchElementException("Can't find such group for API request!")
+            }
+            return@flatMap api.getScheduleForGroup(index)
+        }
     }
 
-    override fun getScheduleForTeacher(teacher: String): Single<SchedulesModel> {
-        TODO("")
+    override fun getScheduleForTeacher(teacher: String): Single<List<ScheduleModel>> {
+        return getTeachers().flatMap {
+            val index = it.indexOf(teacher)
+            if (index == -1) {
+                return@flatMap Single.error<List<ScheduleModel>>(NoSuchElementException("Can't find such teacher for API request!"))
+            }
+            return@flatMap api.getScheduleForTeacher(index)
+        }
     }
 
-    override fun getScheduleForGroup(index: Int): Single<SchedulesModel> {
+    override fun getScheduleForGroup(index: Int): Single<List<ScheduleModel>> {
         return api.getScheduleForGroup(index)
     }
 
-    override fun getScheduleForTeacher(index: Int): Single<SchedulesModel> {
+    override fun getScheduleForTeacher(index: Int): Single<List<ScheduleModel>> {
         return api.getScheduleForTeacher(index)
     }
 

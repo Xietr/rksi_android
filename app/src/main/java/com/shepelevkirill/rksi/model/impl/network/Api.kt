@@ -2,11 +2,11 @@ package com.shepelevkirill.rksi.model.impl.network
 
 import com.shepelevkirill.rksi.model.core.models.GroupsModel
 import com.shepelevkirill.rksi.model.core.models.ScheduleModel
-import com.shepelevkirill.rksi.model.core.models.SchedulesModel
 import com.shepelevkirill.rksi.model.core.models.TeachersModel
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface Api {
 
@@ -17,8 +17,8 @@ interface Api {
     fun getTeachers(): Single<List<String>>
 
     @GET("schedule.php?type=group")
-    fun getScheduleForGroup(@Path("item") index: Int): Single<SchedulesModel>
+    fun getScheduleForGroup(@Query("item") index: Int): Single<List<ScheduleModel>>
 
     @GET("schedule.php?type=teacher")
-    fun getScheduleForTeacher(@Path("item") index: Int): Single<SchedulesModel>
+    fun getScheduleForTeacher(@Query("item") index: Int): Single<List<ScheduleModel>>
 }
