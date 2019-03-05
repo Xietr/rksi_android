@@ -8,6 +8,8 @@ ext {
     retrofitGson = '2.5.0'
     loggingInterceptor = '3.12.1'
     threeTenABP = '1.1.2'
+    moxy = '1.5.5'
+    dagger = '2.21'
 }
 
 buildscript {
