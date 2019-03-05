@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-              android:layout_height="wrap_content" android:orientation="vertical">
+              android:layout_height="wrap_content" android:orientation="vertical"
+              android:background="@color/colorStatusBar" android:layout_marginTop="0dp" android:padding="4dp">
     <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/date"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" android:textColor="@color/colorDateText"/>
-    <View
-            android:id="@+id/divider4"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-    />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textAlignment="viewStart" android:textColor="#ffffff"
+            android:layout_marginLeft="16dp"/>
 </LinearLayout>

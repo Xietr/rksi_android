@@ -1,13 +1,16 @@
 package com.shepelevkirill.rksi.view.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.shepelevkirill.rksi.App
 import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.model.core.models.SubjectModel
-import com.shepelevkirill.rksi.model.core.processors.DateProcessor
-import com.shepelevkirill.rksi.model.core.processors.TimeProcessor
+import com.shepelevkirill.rksi.view.getString
+import com.shepelevkirill.rksi.view.processors.DateProcessor
+import com.shepelevkirill.rksi.view.processors.TimeProcessor
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -16,6 +19,7 @@ import kotlinx.android.synthetic.main.item_date.view.*
 import kotlinx.android.synthetic.main.item_subject.view.*
 import org.threeten.bp.LocalDate
 import java.util.concurrent.TimeUnit
+import javax.security.auth.Subject
 
 class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val data: ArrayList<Any> = ArrayList()
@@ -76,33 +80,62 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     inner class SubjectViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        var updater: Disposable? = null
+        private var updater: Disposable? = null
+        private var statusColor: Int = 0
 
         fun bind(subject: SubjectModel) {
             view.subject.text = subject.subject
-            view.duration.text = TimeProcessor.getDuration(subject.startTime, subject.endTime)
-            view.cabinet.text = "Кабинет ${subject.cabinet}, "
+            view.startTime.text = subject.startTime.getString()
+            view.endTime.text = subject.endTime.getString()
+            view.cabinet.text = "Кабинет ${subject.cabinet}"
             view.who.text = subject.teacher
+
+            updateStatusColor(subject)
+            updateWaitTime(subject)
+            updateStatusLine()
 
             if (updater == null)
                 updater = Observable.interval(1, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.single())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-                        val waitTime = TimeProcessor.getWaitTime(subject.date, subject.startTime, subject.endTime)
-                        if (waitTime == "") {
-                            view.waitTime.visibility = View.GONE
-                        } else {
-                            view.waitTime.visibility = View.VISIBLE
-                            view.waitTime.text = waitTime
-                        }
-
-
+                        updateStatusColor(subject)
+                        updateWaitTime(subject)
+                        updateStatusLine()
                     }
         }
 
         fun unbind() {
             updater?.dispose()
+            updater = null
+        }
+
+
+        fun updateWaitTime(subject: SubjectModel) {
+            val waitTime = TimeProcessor.getWaitTime(subject.date, subject.startTime, subject.endTime)
+            if (waitTime == "") {
+                view.waitTime.visibility = View.GONE
+            } else {
+                view.waitTime.visibility = View.VISIBLE
+                view.waitTime.text = waitTime
+                view.waitTime.setTextColor(statusColor)
+            }
+        }
+
+        fun updateStatusLine() {
+            view.statusLine.setBackgroundColor(statusColor)
+        }
+
+        fun updateStatusColor(subject: SubjectModel) {
+            val status = TimeProcessor.getSubjectStatus(subject.date, subject.startTime, subject.endTime)
+            val resources = App.applicationContext!!.resources
+            statusColor = when(status) {
+                TimeProcessor.SubjectStatus.ANOTHER_DAY -> resources.getColor(R.color.colorSubjectAnotherDay)
+                TimeProcessor.SubjectStatus.WILL_BE -> resources.getColor(R.color.colorSubjectWillBe)
+                TimeProcessor.SubjectStatus.IS_GOING -> resources.getColor(R.color.colorSubjectGoing)
+                TimeProcessor.SubjectStatus.GONE -> resources.getColor(R.color.colorSubjectGone)
+                else -> throw NoSuchElementException("Can't associate color with status of subject")
+            }
         }
     }
 
@@ -114,6 +147,15 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun add(date: LocalDate) {
         data.add(date)
+        notifyDataSetChanged()
+    }
+
+    fun clear() {
+        data.clear()
+        notifyDataSetChanged()
+    }
+
+    fun refresh() {
         notifyDataSetChanged()
     }
 }

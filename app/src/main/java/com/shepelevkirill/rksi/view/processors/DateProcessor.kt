@@ -1,4 +1,4 @@
-package com.shepelevkirill.rksi.model.core.processors
+package com.shepelevkirill.rksi.view.processors
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter

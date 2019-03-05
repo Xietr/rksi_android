@@ -33,7 +33,7 @@ import javax.security.auth.Subject
 class MainActivity : AppCompatActivity() {
 
     val disposer = CompositeDisposable()
-
+    val adapter = ScheduleAdapter()
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
@@ -49,6 +49,11 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
+    override fun onResume() {
+        super.onResume()
+        adapter.refresh()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         disposer.dispose()
@@ -58,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adapter = ScheduleAdapter()
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.setHasFixedSize(true)

@@ -17,5 +17,10 @@
     <color name="colorSubjectText">#000000</color>
     <color name="colorWaitTimeText">#00BC6C</color>
     <color name="colorCommonText">#14394F</color>
+
+    <color name="colorSubjectAnotherDay">#3b5998</color>
+    <color name="colorSubjectWillBe">#4d92fd</color>
+    <color name="colorSubjectGoing">#00BC6C</color>
+    <color name="colorSubjectGone">#FF0000</color>
     <!-- GREEN FOR WAIT TIME #00BC6C -->
 </resources>

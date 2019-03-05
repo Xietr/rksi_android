@@ -1,45 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                   xmlns:tools="http://schemas.android.com/tools"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   android:layout_marginTop="10dp"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
 >
-    <LinearLayout
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/subject"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/statusLine"
+            android:layout_marginStart="5dp" android:textColor="@color/colorSubjectText"
+            app:layout_constraintTop_toTopOf="@+id/guideline3" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" tools:text="Основы безопасности жизнедеятельности"/>
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/cabinet" android:textAlignment="viewStart"
+            android:textColor="@color/colorCommonText"
+            app:layout_constraintStart_toStartOf="@+id/subject" app:layout_constraintTop_toBottomOf="@+id/subject"
+            tools:text="Кабинет 301"/>
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/startTime"
+            app:layout_constraintTop_toTopOf="@+id/guideline3" app:layout_constraintBottom_toTopOf="@+id/endTime"
+            android:layout_marginTop="8dp"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:textAppearance="@style/TextAppearance.AppCompat" android:fontFamily="monospace"
+            android:textAlignment="textEnd" tools:text="11:30"
+            app:layout_constraintStart_toStartOf="@+id/guideline" android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"/>
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/who"
+            android:textAlignment="viewStart" android:textColor="@color/colorCommonText"
+            app:layout_constraintTop_toBottomOf="@+id/cabinet"
+            app:layout_constraintStart_toStartOf="@+id/cabinet" tools:text="Марышева М.Н."/>
+    <TextView
+            android:text="13:00"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/endTime"
+            app:layout_constraintTop_toBottomOf="@+id/startTime" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"
+            android:fontFamily="monospace"
+            android:textAlignment="textEnd"
+            app:layout_constraintStart_toStartOf="@+id/startTime" android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"/>
+    <androidx.constraintlayout.widget.Guideline
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:paddingLeft="6dp" android:paddingRight="6dp"
-            android:paddingTop="6dp" android:paddingBottom="6dp">
-        <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/subject" tools:text="Обществознание"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textSize="20sp"/>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <TextView
-                    android:text="Кабинет 301"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/cabinet" android:textAlignment="viewStart"
-                    android:textColor="@color/colorCommonText"/>
-            <TextView
-                    android:text="TextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/duration" tools:text="8:00 - 9:30"
-                    android:textAlignment="viewStart" android:textColor="@color/colorCommonText"/>
-        </LinearLayout>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" tools:text="Джалагония М.Ш." android:id="@+id/who"
-                android:textAlignment="viewStart" android:textColor="@color/colorCommonText"/>
-        <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/waitTime" tools:text="Начало через 5 мин."
-                android:textColor="@color/colorWaitTimeText"/>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:layout_constraintGuide_begin="6dp" android:id="@+id/guideline"/>
+    <View
+            android:id="@+id/statusLine"
+            android:layout_width="3dp"
+            android:background="@color/colorStatusBar"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@+id/guideline3"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"
+            app:layout_constraintStart_toStartOf="@+id/guideline4" android:layout_marginStart="6dp"/>
+    <androidx.constraintlayout.widget.Guideline
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:layout_constraintGuide_begin="6dp" android:id="@+id/guideline3"/>
+    <androidx.constraintlayout.widget.Guideline
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/guideline6"
+            app:layout_constraintGuide_end="6dp"/>
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/waitTime"
+            app:layout_constraintTop_toBottomOf="@+id/who" app:layout_constraintStart_toStartOf="@+id/who"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6" android:textColor="@color/colorWaitTimeText"
+            tools:text="Начало через 11 ч. 55 мин. 30 сек."/>
+    <View
+            android:id="@+id/divider3"
+            android:layout_width="395dp"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <androidx.constraintlayout.widget.Guideline
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:layout_constraintGuide_begin="52dp" android:id="@+id/guideline4"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

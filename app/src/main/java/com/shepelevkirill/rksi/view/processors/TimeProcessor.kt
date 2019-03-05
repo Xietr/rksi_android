@@ -1,4 +1,4 @@
-package com.shepelevkirill.rksi.model.core.processors
+package com.shepelevkirill.rksi.view.processors
 
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDate
@@ -46,8 +46,52 @@ class TimeProcessor {
 
             hours = duration.toHours()
             minutes = duration.minusHours(hours).toMinutes()
+            val seconds = duration.minusHours(hours).minusMinutes(minutes).seconds
 
-            return "$prefix через $hours ч. $minutes мин."
+            var hoursStr = ""
+            if (hours > 0)
+                hoursStr = "$hours ч. "
+
+            var minutesStr = ""
+            if (minutes > 0)
+                minutesStr = "$minutes мин. "
+
+            var secondsStr = ""
+            if (seconds > 0)
+                secondsStr = "$seconds сек."
+
+            return "$prefix через $hoursStr$minutesStr$secondsStr"
         }
+
+        fun getSubjectStatus(date: LocalDate, startTime: LocalTime, endTime: LocalTime): SubjectStatus {
+            val currentTime = LocalTime.now()
+            val currentDate = LocalDate.now()
+
+            if (!currentDate.isEqual(date)) {
+                return SubjectStatus.ANOTHER_DAY
+            }
+
+            if (currentTime.isAfter(endTime)) {
+                return SubjectStatus.GONE
+            }
+
+            if (currentTime.isBefore(startTime)) {
+                return SubjectStatus.WILL_BE
+            }
+
+            if (currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
+                return SubjectStatus.IS_GOING
+            }
+
+            return SubjectStatus.NONE
+        }
+    }
+
+    enum class SubjectStatus {
+        NONE,
+        ANOTHER_DAY,
+        WILL_BE,
+        IS_GOING, // Когда пара идет
+        GONE, // Пара прошла
     }
 }
