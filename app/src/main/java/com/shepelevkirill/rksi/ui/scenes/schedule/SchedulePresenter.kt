@@ -43,6 +43,10 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
         val adapter = recyclerView.adapter as ScheduleAdapter
 
         val lastVisibleItemPos = layoutManager.findFirstCompletelyVisibleItemPosition()
+        if (lastVisibleItemPos < 0) {
+            return
+        }
+
         val lastVisibleItem = adapter.get(lastVisibleItemPos)
 
         when(lastVisibleItem) {
@@ -59,6 +63,8 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
     }
 
     fun onRefresh() {
+        scheduleLoader?.dispose()
+        viewState.clearSchedule()
         loadSchedule()
     }
 
@@ -80,10 +86,13 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
 
                     scheduleLoader!!.dispose()
                     scheduleLoader = null
+
+                    viewState.stopRefreshing()
                 }
 
                 override fun onError(e: Throwable) {
                     viewState.showError()
+                    viewState.stopRefreshing()
                 }
 
             })

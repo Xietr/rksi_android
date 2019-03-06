@@ -3,6 +3,7 @@ package com.shepelevkirill.rksi.data.core.models
 import com.google.gson.annotations.SerializedName
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
+import java.io.Serializable
 
 data class ScheduleModel(
     val date: LocalDate,
@@ -30,4 +31,4 @@ data class SubjectModel(
 
     @SerializedName("tt_sub")
     val subject: String
-)
+) : Serializable

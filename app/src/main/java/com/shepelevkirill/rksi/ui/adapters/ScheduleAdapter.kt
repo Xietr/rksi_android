@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shepelevkirill.rksi.App
 import com.shepelevkirill.rksi.R
-import com.shepelevkirill.rksi.data.core.models.ScheduleModel
 import com.shepelevkirill.rksi.data.core.models.SubjectModel
 import com.shepelevkirill.rksi.utils.getString
 import com.shepelevkirill.rksi.utils.processors.DateProcessor
@@ -113,11 +112,11 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun updateWaitTime(subject: SubjectModel) {
             val waitTime = TimeProcessor.getWaitTime(subject.date, subject.startTime, subject.endTime)
             if (waitTime == "") {
-                view.waitTime.visibility = View.GONE
+                view.swaitTime.visibility = View.GONE
             } else {
-                view.waitTime.visibility = View.VISIBLE
-                view.waitTime.text = waitTime
-                view.waitTime.setTextColor(statusColor)
+                view.swaitTime.visibility = View.VISIBLE
+                view.swaitTime.text = waitTime
+                view.swaitTime.setTextColor(statusColor)
             }
         }
 

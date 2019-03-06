@@ -60,7 +60,7 @@ class TimeProcessor {
             if (seconds > 0)
                 secondsStr = "$seconds сек."
 
-            return "$prefix через $hoursStr$minutesStr$secondsStr"
+            return "$prefix через $hoursStr$minutesStr"
         }
 
         fun getSubjectStatus(date: LocalDate, startTime: LocalTime, endTime: LocalTime): SubjectStatus {

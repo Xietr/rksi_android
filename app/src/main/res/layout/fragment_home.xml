@@ -5,39 +5,13 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent">
 
-    <TextView
-            android:text="Математика"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView" android:textSize="30sp"
-            tools:layout_editor_absoluteX="39dp" tools:layout_editor_absoluteY="90dp"/>
-    <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2" tools:text="Следующая пара:"
-            tools:layout_editor_absoluteX="39dp" tools:layout_editor_absoluteY="63dp"/>
-    <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" tools:layout_editor_absoluteY="162dp"
-            tools:layout_editor_absoluteX="39dp" android:id="@+id/textView3" tools:text="Кабинет 301"
-            android:textSize="20sp"/>
-    <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" tools:layout_editor_absoluteY="200dp"
-            tools:layout_editor_absoluteX="41dp" android:id="@+id/textView4" android:textSize="20sp"
-            tools:text="11:30 - 13:00"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" tools:layout_editor_absoluteY="138dp"
-            tools:layout_editor_absoluteX="113dp" android:id="@+id/textView5" tools:text="Джалагония М.Ш."
-            android:textSize="12sp"/>
-    <TextView
-            android:text="TextView"
-            android:layout_width="333dp"
-            android:layout_height="27dp" tools:layout_editor_absoluteY="240dp"
-            tools:layout_editor_absoluteX="39dp" android:id="@+id/textView6"
-            tools:text="Начало через 1 ч. 5 мин. 35 сек." android:textSize="18sp"/>
+    <me.kaelaela.verticalviewpager.VerticalViewPager android:layout_width="match_parent"
+                                                     android:layout_height="match_parent" android:id="@+id/viewPager"
+                                                     app:layout_constraintStart_toStartOf="parent"
+                                                     app:layout_constraintEnd_toEndOf="parent"
+                                                     app:layout_constraintTop_toTopOf="parent"
+                                                     app:layout_constraintBottom_toBottomOf="parent"
+                                                     android:paddingBottom="20dp"
+                                                     android:paddingTop="20dp"
+                                                    android:clipToPadding="false"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

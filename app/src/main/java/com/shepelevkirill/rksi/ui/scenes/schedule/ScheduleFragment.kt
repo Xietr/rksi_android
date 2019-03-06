@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -22,7 +23,6 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
     lateinit var presenter: SchedulePresenter
 
     private val adapter: ScheduleAdapter = ScheduleAdapter()
-    private val layoutManager: LinearLayoutManager = LinearLayoutManager(App.applicationContext)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_schedule, container, false)
@@ -38,9 +38,14 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
         super.onCreate(savedInstanceState)
     }
 
+    override fun onResume() {
+        super.onResume()
+        adapter.refresh()
+    }
+
     private fun setupRecyclerView() {
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = layoutManager
+        recyclerView.layoutManager = LinearLayoutManager(view!!.context)
         recyclerView.setHasFixedSize(true)
         recyclerView.setOnScrollListener(onScrollListener)
     }
@@ -59,7 +64,7 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
     }
 
     override fun setTitle(title: String) {
-        
+        activity!!.title = title
     }
 
     override fun showSchedule(schedule: List<ScheduleModel>) {
@@ -74,7 +79,7 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
     }
 
     override fun showError() {
-        TODO("SHOW ERROR")
+        Toast.makeText(context, "Internet Connection Lost", Toast.LENGTH_SHORT)
     }
 
     override fun stopRefreshing() {

@@ -72,7 +72,7 @@
     <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/waitTime"
+            android:id="@+id/swaitTime"
             app:layout_constraintTop_toBottomOf="@+id/who" app:layout_constraintStart_toStartOf="@+id/who"
             app:layout_constraintBottom_toTopOf="@+id/guideline6" android:textColor="@color/colorWaitTimeText"
             tools:text="Начало через 11 ч. 55 мин. 30 сек."/>
