@@ -1,33 +1,37 @@
-package com.shepelevkirill.rksi.ui.scenes
+package com.shepelevkirill.rksi.ui.scenes.main
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.arellomobile.mvp.MvpAppCompatActivity
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.viewstate.strategy.OneExecutionStateStrategy
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.ui.scenes.schedule.ScheduleFragment
 import com.shepelevkirill.rksi.ui.scenes.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
-    private val scheduleFragment: ScheduleFragment = ScheduleFragment()
-    private val settingsFragment: SettingsFragment = SettingsFragment()
+class MainActivity : MvpAppCompatActivity(), MainMvpView {
+    @InjectPresenter
+    lateinit var presenter: MainPresenter
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_schedule -> {
-                openFragment(scheduleFragment)
+                presenter.onSchedulePressed()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_settings -> {
-                openFragment(settingsFragment)
+                presenter.onSettingsPressed()
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
     }
 
-    private fun openFragment(fragment: Fragment) {
+    override fun openFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment)
             .commit()
@@ -36,8 +40,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        openFragment(scheduleFragment)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }

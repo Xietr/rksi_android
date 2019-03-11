@@ -1,9 +1,10 @@
 package com.shepelevkirill.rksi.ui.scenes.schedule
 
 import com.arellomobile.mvp.MvpView
+import com.arellomobile.mvp.viewstate.strategy.OneExecutionStateStrategy
+import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import com.shepelevkirill.rksi.data.core.models.ScheduleModel
-import com.shepelevkirill.rksi.data.core.models.SubjectModel
-import org.threeten.bp.LocalDate
 
 interface ScheduleMvpView : MvpView {
     fun setTitle(title: String)

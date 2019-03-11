@@ -31,10 +31,6 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
         App.appComponent.inject(this)
     }
 
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-    }
-
     fun onResume() {
         val selectedGroup = preferencesRepository.getSelectedGroup()
         if (selectedGroup != currentGroup) {
