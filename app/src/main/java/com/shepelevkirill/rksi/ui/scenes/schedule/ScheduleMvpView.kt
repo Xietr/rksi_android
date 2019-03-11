@@ -1,9 +1,6 @@
 package com.shepelevkirill.rksi.ui.scenes.schedule
 
 import com.arellomobile.mvp.MvpView
-import com.arellomobile.mvp.viewstate.strategy.OneExecutionStateStrategy
-import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy
-import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import com.shepelevkirill.rksi.data.core.models.ScheduleModel
 
 interface ScheduleMvpView : MvpView {
@@ -15,5 +12,6 @@ interface ScheduleMvpView : MvpView {
     fun showError()
     fun showToast(message: String)
 
+    fun startRefreshing()
     fun stopRefreshing()
 }

@@ -41,7 +41,7 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
     override fun onResume() {
         super.onResume()
         adapter.refresh()
-
+        activity?.setTitle("Расписание")
         presenter.onResume()
     }
 
@@ -70,7 +70,7 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
     }
 
     override fun showToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT)
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun showSchedule(schedule: List<ScheduleModel>) {
@@ -86,6 +86,10 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
 
     override fun showError() {
         Toast.makeText(context, "Internet Connection Lost", Toast.LENGTH_SHORT)
+    }
+
+    override fun startRefreshing() {
+        swipeRefreshLayout.isRefreshing = true
     }
 
     override fun stopRefreshing() {

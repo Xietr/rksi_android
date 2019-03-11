@@ -17,5 +17,7 @@ class DateProcessor {
             val formatter = DateTimeFormatter.ofPattern("d MMM, EEEE", Locale("ru"))
             return date.format(formatter)
         }
+
+        fun isToday(date: LocalDate): Boolean = date.isEqual(LocalDate.now())
     }
 }
