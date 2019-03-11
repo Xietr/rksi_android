@@ -12,6 +12,7 @@ interface ScheduleMvpView : MvpView {
     fun clearSchedule()
 
     fun showError()
+    fun showToast(message: String)
 
     fun stopRefreshing()
 }

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1071805827431",
+    "firebase_url": "https://rksi-65def.firebaseio.com",
+    "project_id": "rksi-65def",
+    "storage_bucket": "rksi-65def.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071805827431:android:f4afa81472529dc0",
+        "android_client_info": {
+          "package_name": "com.shepelevkirill.rksi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1071805827431-gu3m909j02nt8j1ak3dmda36qi5gvf7v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC58dVYmH3-tjOuaY702lvPN_YLqvbycqU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

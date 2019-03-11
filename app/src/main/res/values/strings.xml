@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">RKSI</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">РКСИ</string>
+    <string name="title_schedule">Расписание</string>
+    <string name="title_settings">Настройки</string>
 </resources>

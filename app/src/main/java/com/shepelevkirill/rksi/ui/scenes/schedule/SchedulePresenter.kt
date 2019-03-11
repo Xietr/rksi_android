@@ -7,6 +7,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.shepelevkirill.rksi.App
 import com.shepelevkirill.rksi.data.core.models.ScheduleModel
 import com.shepelevkirill.rksi.data.core.models.SubjectModel
+import com.shepelevkirill.rksi.data.core.repository.PreferencesRepository
 import com.shepelevkirill.rksi.data.core.repository.ScheduleRepository
 import com.shepelevkirill.rksi.ui.adapters.ScheduleAdapter
 import com.shepelevkirill.rksi.utils.processors.DateProcessor
@@ -21,7 +22,9 @@ import javax.inject.Inject
 @InjectViewState
 class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
     @Inject lateinit var scheduleRepository: ScheduleRepository
+    @Inject lateinit var preferencesRepository: PreferencesRepository
 
+    private var currentGroup = ""
     private var scheduleLoader: Disposable? = null
 
     init {
@@ -30,7 +33,14 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        loadSchedule()
+    }
+
+    fun onResume() {
+        val selectedGroup = preferencesRepository.getSelectedGroup()
+        if (selectedGroup != currentGroup) {
+            currentGroup = selectedGroup
+            loadSchedule()
+        }
     }
 
     override fun onDestroy() {
@@ -51,11 +61,11 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
 
         when(lastVisibleItem) {
             is SubjectModel -> {
-                val title = DateProcessor.getDate(lastVisibleItem.date)
+                val title = DateProcessor.getDate(lastVisibleItem.date) + " ($currentGroup)"
                 viewState.setTitle(title)
             }
             is LocalDate -> {
-                val title = DateProcessor.getDate(lastVisibleItem)
+                val title = DateProcessor.getDate(lastVisibleItem) + " ($currentGroup)"
                 viewState.setTitle(title)
             }
             else -> throw NoSuchElementException("Can't associate this with element")
@@ -73,7 +83,7 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
             return
 
         viewState.clearSchedule()
-        scheduleRepository.getScheduleForGroup("ПОКС-11")
+        scheduleRepository.getScheduleForGroup(currentGroup)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object: SingleObserver<List<ScheduleModel>> {
@@ -93,6 +103,7 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
                 override fun onError(e: Throwable) {
                     viewState.showError()
                     viewState.stopRefreshing()
+                    viewState.showToast("Ошибка сети!")
                 }
 
             })

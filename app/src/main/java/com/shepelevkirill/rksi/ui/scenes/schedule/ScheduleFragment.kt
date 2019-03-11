@@ -41,6 +41,8 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
     override fun onResume() {
         super.onResume()
         adapter.refresh()
+
+        presenter.onResume()
     }
 
     private fun setupRecyclerView() {
@@ -65,6 +67,10 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
 
     override fun setTitle(title: String) {
         activity!!.title = title
+    }
+
+    override fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT)
     }
 
     override fun showSchedule(schedule: List<ScheduleModel>) {

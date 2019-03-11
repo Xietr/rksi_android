@@ -6,7 +6,7 @@ interface PreferencesRepository {
     fun putSelectedGroup(group: String)
     fun getSelectedGroup(): String
 
-    fun putSelectedTeacher(teacher: String): String
+    fun putSelectedTeacher(teacher: String)
     fun getSelectedTeacher(): String
 
     fun putMode(mode: ApplicationMode)
