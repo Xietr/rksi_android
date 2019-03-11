@@ -9,5 +9,5 @@
             android:layout_height="wrap_content" android:id="@+id/date"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textAlignment="viewStart" android:textColor="#ffffff"
-            android:layout_marginLeft="16dp"/>
+            android:layout_marginLeft="16dp" android:fontFamily="@font/sf_light"/>
 </LinearLayout>

@@ -13,20 +13,21 @@
             app:layout_constraintStart_toEndOf="@+id/statusLine"
             android:layout_marginStart="5dp" android:textColor="@color/colorSubjectText"
             app:layout_constraintTop_toTopOf="@+id/guideline3" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" tools:text="Основы безопасности жизнедеятельности"/>
+            app:layout_constraintEnd_toEndOf="parent" tools:text="Основы безопасности жизнедеятельности"
+            android:fontFamily="@font/sf_medium"/>
     <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/cabinet" android:textAlignment="viewStart"
             android:textColor="@color/colorCommonText"
             app:layout_constraintStart_toStartOf="@+id/subject" app:layout_constraintTop_toBottomOf="@+id/subject"
-            tools:text="Кабинет 301"/>
+            tools:text="Кабинет 301" android:fontFamily="@font/sf_regular"/>
     <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content" android:id="@+id/startTime"
             app:layout_constraintTop_toTopOf="@+id/guideline3" app:layout_constraintBottom_toTopOf="@+id/endTime"
             android:layout_marginTop="8dp"
             app:layout_constraintVertical_chainStyle="packed"
-            android:textAppearance="@style/TextAppearance.AppCompat" android:fontFamily="monospace"
+            android:textAppearance="@style/TextAppearance.AppCompat" android:fontFamily="@font/sf_mono_regular"
             android:textAlignment="textEnd" tools:text="11:30"
             app:layout_constraintStart_toStartOf="@+id/guideline" android:textSize="13sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"/>
@@ -35,7 +36,8 @@
             android:layout_height="wrap_content" android:id="@+id/who"
             android:textAlignment="viewStart" android:textColor="@color/colorCommonText"
             app:layout_constraintTop_toBottomOf="@+id/cabinet"
-            app:layout_constraintStart_toStartOf="@+id/cabinet" tools:text="Марышева М.Н."/>
+            app:layout_constraintStart_toStartOf="@+id/cabinet" tools:text="Марышева М.Н."
+            android:fontFamily="@font/sf_regular"/>
     <TextView
             android:text="13:00"
             android:layout_width="0dp"
@@ -43,7 +45,7 @@
             android:id="@+id/endTime"
             app:layout_constraintTop_toBottomOf="@+id/startTime" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
-            android:fontFamily="monospace"
+            android:fontFamily="@font/sf_mono_regular"
             android:textAlignment="textEnd"
             app:layout_constraintStart_toStartOf="@+id/startTime" android:textSize="13sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"/>
@@ -75,7 +77,7 @@
             android:id="@+id/swaitTime"
             app:layout_constraintTop_toBottomOf="@+id/who" app:layout_constraintStart_toStartOf="@+id/who"
             app:layout_constraintBottom_toTopOf="@+id/guideline6" android:textColor="@color/colorWaitTimeText"
-            tools:text="Начало через 11 ч. 55 мин. 30 сек."/>
+            tools:text="Начало через 11 ч. 55 мин. 30 сек." android:fontFamily="@font/sf_regular"/>
     <View
             android:id="@+id/divider3"
             android:layout_width="395dp"

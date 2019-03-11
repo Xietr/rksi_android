@@ -1,9 +1,11 @@
 package com.shepelevkirill.rksi.di.repository
 
 import android.content.Context
+import com.shepelevkirill.rksi.data.core.repository.NetworkRepository
 import com.shepelevkirill.rksi.data.core.repository.PreferencesRepository
 import com.shepelevkirill.rksi.data.core.repository.ScheduleRepository
 import com.shepelevkirill.rksi.data.impl.network.Api
+import com.shepelevkirill.rksi.data.impl.repository.NetworkRepositoryImpl
 import com.shepelevkirill.rksi.data.impl.repository.PreferencesRepositoryImpl
 import com.shepelevkirill.rksi.data.impl.repository.ScheduleRepositoryImpl
 import com.shepelevkirill.rksi.di.AppModule
@@ -28,4 +30,8 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun providePreferencesRepository(context: Context): PreferencesRepository = PreferencesRepositoryImpl(context)
+
+    @Provides
+    @Singleton
+    fun provideNetworkRepository(context: Context): NetworkRepository = NetworkRepositoryImpl(context)
 }

@@ -2,23 +2,13 @@ package com.shepelevkirill.rksi.ui.scenes.intro
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
-import android.view.View
-import android.view.Window
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.arellomobile.mvp.MvpActivity
-import com.crashlytics.android.Crashlytics
-import com.github.paolorotolo.appintro.AppIntro
 import com.github.paolorotolo.appintro.AppIntro2
 import com.github.paolorotolo.appintro.AppIntroFragment
 import com.github.paolorotolo.appintro.model.SliderPagerBuilder
 import com.shepelevkirill.rksi.App
-import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.data.core.repository.PreferencesRepository
-import com.shepelevkirill.rksi.ui.scenes.MainActivity
-import com.shepelevkirill.rksi.ui.scenes.settings.SettingsFragment
+import com.shepelevkirill.rksi.ui.scenes.main.MainActivity
 import javax.inject.Inject
 
 class IntroActivity : AppIntro2() {

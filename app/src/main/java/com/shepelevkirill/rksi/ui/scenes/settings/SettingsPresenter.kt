@@ -22,10 +22,6 @@ class SettingsPresenter : MvpPresenter<SettingsMvpView>() {
         App.appComponent.inject(this)
     }
 
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-    }
-
     fun onResume() {
         loadGroups()
     }
