@@ -14,8 +14,7 @@ import com.shepelevkirill.rksi.ui.scenes.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : MvpAppCompatActivity(), MainMvpView {
-    @InjectPresenter
-    lateinit var presenter: MainPresenter
+    @InjectPresenter lateinit var presenter: MainPresenter
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {

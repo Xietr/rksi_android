@@ -32,7 +32,7 @@ class TimeProcessorImpl : TimeProcessor {
             IntervalStatus.NONE -> throw Exception("None as interval status")
             IntervalStatus.ANOTHER_DAY -> null
             IntervalStatus.WILL_BE -> WaitTime(WaitTime.Prefix.WILL_START, hours, minutes)
-            IntervalStatus.IS_GOING -> WaitTime(WaitTime.Prefix.WILL_START, hours, minutes)
+            IntervalStatus.IS_GOING -> WaitTime(WaitTime.Prefix.WILL_END, hours, minutes)
             IntervalStatus.GONE -> WaitTime(WaitTime.Prefix.END, hours, minutes)
         }
     }

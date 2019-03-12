@@ -8,5 +8,9 @@ interface SubjectProcessor {
     fun processTeacher(subject: SubjectModel): String
     fun processGroup(subject: SubjectModel): String
 
+    fun processCabinet(subject: SubjectModel): String
+
+    fun processStartTime(subject: SubjectModel): String
+    fun processEndTime(subject: SubjectModel): String
     fun processWaitTime(subject: SubjectModel): String?
 }

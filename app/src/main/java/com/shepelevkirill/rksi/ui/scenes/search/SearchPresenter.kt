@@ -55,9 +55,9 @@ class SearchPresenter : MvpPresenter<SearchMvpView>() {
                 }
 
                 override fun onError(e: Throwable) {
+                    viewState.showToast("Ошибка сети!")
                     teachersLoader?.dispose()
                     teachersLoader = null
-                    // TODO SHOW ERROR
                 }
 
             })

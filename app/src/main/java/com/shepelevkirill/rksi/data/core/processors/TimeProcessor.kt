@@ -21,8 +21,8 @@ interface TimeProcessor {
 
             override fun toString(): String = when (this) {
                 NONE -> "NONE"
-                WILL_START -> "Начало"
-                WILL_END -> "Конец"
+                WILL_START -> "Начало через"
+                WILL_END -> "Конец через"
                 END -> "Пара закончилась"
             }
         }
