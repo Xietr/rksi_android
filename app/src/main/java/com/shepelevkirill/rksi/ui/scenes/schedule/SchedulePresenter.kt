@@ -7,10 +7,11 @@ import com.arellomobile.mvp.MvpPresenter
 import com.shepelevkirill.rksi.App
 import com.shepelevkirill.rksi.data.core.models.ScheduleModel
 import com.shepelevkirill.rksi.data.core.models.SubjectModel
+import com.shepelevkirill.rksi.data.core.processors.DateProcessor
 import com.shepelevkirill.rksi.data.core.repository.PreferencesRepository
 import com.shepelevkirill.rksi.data.core.repository.ScheduleRepository
 import com.shepelevkirill.rksi.ui.adapters.ScheduleAdapter
-import com.shepelevkirill.rksi.utils.processors.DateProcessor
+import com.shepelevkirill.rksi.data.impl.processors.DateProcessorImpl
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -23,6 +24,7 @@ import javax.inject.Inject
 class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
     @Inject lateinit var scheduleRepository: ScheduleRepository
     @Inject lateinit var preferencesRepository: PreferencesRepository
+    @Inject lateinit var dateProcessor: DateProcessor
 
     private var currentGroup = ""
     private var scheduleLoader: Disposable? = null
@@ -57,11 +59,11 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
 
         when(lastVisibleItem) {
             is SubjectModel -> {
-                val title = DateProcessor.getDate(lastVisibleItem.date) + " ($currentGroup)"
+                val title = dateProcessor.getDate(lastVisibleItem.date) + " ($currentGroup)"
                 viewState.setTitle(title)
             }
             is LocalDate -> {
-                val title = DateProcessor.getDate(lastVisibleItem) + " ($currentGroup)"
+                val title = dateProcessor.getDate(lastVisibleItem) + " ($currentGroup)"
                 viewState.setTitle(title)
             }
             else -> throw NoSuchElementException("Can't associate this with element")
@@ -90,20 +92,18 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
 
                 override fun onSuccess(t: List<ScheduleModel>) {
                     viewState.showSchedule(t)
+                    viewState.stopRefreshing()
 
                     scheduleLoader?.dispose()
                     scheduleLoader = null
-
-                    viewState.stopRefreshing()
                 }
 
                 override fun onError(e: Throwable) {
-                    scheduleLoader?.dispose()
-                    scheduleLoader = null
-
-                    viewState.showError()
                     viewState.stopRefreshing()
                     viewState.showToast("Ошибка сети!")
+
+                    scheduleLoader?.dispose()
+                    scheduleLoader = null
                 }
 
             })

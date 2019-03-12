@@ -11,4 +11,6 @@ interface SearchMvpView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun openViewerFragment(searchType: SearchType, searchFor: String)
+
+    fun showToast(message: String)
 }

@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shepelevkirill.rksi.App
 import com.shepelevkirill.rksi.R
+import com.shepelevkirill.rksi.data.core.enums.SearchType
 import com.shepelevkirill.rksi.data.core.models.SubjectModel
-import com.shepelevkirill.rksi.utils.getString
-import com.shepelevkirill.rksi.utils.isToday
-import com.shepelevkirill.rksi.utils.processors.DateProcessor
-import com.shepelevkirill.rksi.utils.processors.TimeProcessor
+import com.shepelevkirill.rksi.data.core.processors.DateProcessor
+import com.shepelevkirill.rksi.data.core.processors.SubjectProcessor
+import com.shepelevkirill.rksi.data.core.processors.TimeProcessor
+import com.shepelevkirill.rksi.data.core.processors.TimeProcessor.IntervalStatus
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -19,9 +20,18 @@ import kotlinx.android.synthetic.main.item_date.view.*
 import kotlinx.android.synthetic.main.item_subject.view.*
 import org.threeten.bp.LocalDate
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ScheduleAdapter(private val searchType: SearchType) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    @Inject lateinit var subjectProcessor: SubjectProcessor
+    @Inject lateinit var dateProcessor: DateProcessor
+    @Inject lateinit var timeProcessor: TimeProcessor
+
     private val data: ArrayList<Any> = ArrayList()
+
+    init {
+        App.appComponent.inject(this)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
@@ -55,6 +65,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         super.onViewRecycled(holder)
         when(holder) {
             is SubjectViewHolder -> holder.unbind()
+            is DateViewHolder -> holder.unbind()
         }
     }
 
@@ -66,79 +77,6 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    enum class ViewHolderType(val id: Int) {
-        NONE(0),
-        DATE(1),
-        SUBJECT(2)
-    }
-
-    inner class DateViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(date: LocalDate) {
-            view.date.text = DateProcessor.getDate(date)
-        }
-    }
-
-    inner class SubjectViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        private var updater: Disposable? = null
-        private var statusColor: Int = 0
-
-        fun bind(subject: SubjectModel) {
-            view.subject.text = subject.subject
-            view.startTime.text = subject.startTime.getString()
-            view.endTime.text = subject.endTime.getString()
-            view.cabinet.text = "Кабинет ${subject.cabinet}"
-            view.who.text = subject.teacher
-
-            updateStatusColor(subject)
-            updateWaitTime(subject)
-            updateStatusLine()
-
-            if (updater == null)
-                updater = Observable.interval(1, TimeUnit.SECONDS)
-                    .subscribeOn(Schedulers.single())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe {
-                        updateStatusColor(subject)
-                        updateWaitTime(subject)
-                        updateStatusLine()
-                    }
-        }
-
-        fun unbind() {
-            updater?.dispose()
-            updater = null
-        }
-
-
-        fun updateWaitTime(subject: SubjectModel) {
-            val waitTime = TimeProcessor.getWaitTime(subject.date, subject.startTime, subject.endTime)
-            if (waitTime == "") {
-                view.swaitTime.visibility = View.GONE
-            } else {
-                view.swaitTime.visibility = View.VISIBLE
-                view.swaitTime.text = waitTime
-                view.swaitTime.setTextColor(statusColor)
-            }
-        }
-
-        fun updateStatusLine() {
-            view.statusLine.setBackgroundColor(statusColor)
-        }
-
-        fun updateStatusColor(subject: SubjectModel) {
-            val status = TimeProcessor.getSubjectStatus(subject.date, subject.startTime, subject.endTime)
-            val resources = App.applicationContext!!.resources
-            statusColor = when(status) {
-                TimeProcessor.SubjectStatus.ANOTHER_DAY -> resources.getColor(R.color.colorSubjectAnotherDay)
-                TimeProcessor.SubjectStatus.WILL_BE -> resources.getColor(R.color.colorSubjectWillBe)
-                TimeProcessor.SubjectStatus.IS_GOING -> resources.getColor(R.color.colorSubjectGoing)
-                TimeProcessor.SubjectStatus.GONE -> resources.getColor(R.color.colorSubjectGone)
-                else -> throw NoSuchElementException("Can't associate color with status of subject")
-            }
-        }
-    }
-
-
     fun add(subject: SubjectModel) {
         data.add(subject)
         notifyDataSetChanged()
@@ -148,6 +86,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         schedule.forEach {
             data.add(it)
         }
+        notifyDataSetChanged()
     }
 
     fun add(date: LocalDate) {
@@ -166,5 +105,124 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun refresh() {
         notifyDataSetChanged()
+    }
+
+    enum class ViewHolderType(val id: Int) {
+        NONE(0),
+        DATE(1),
+        SUBJECT(2)
+    }
+
+    inner class DateViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+        private var updater: Disposable? = null
+
+        fun bind(date: LocalDate) {
+            render(date)
+
+            startUpdater(date)
+        }
+
+        fun unbind() {
+            updater?.dispose()
+            updater = null
+        }
+
+        // Calls once on create
+        private fun render(date: LocalDate) {
+            updateDate(date)
+        }
+
+        // Calls parallel
+        private fun update(date: LocalDate) {
+            updateDate(date)
+        }
+
+        private fun startUpdater(date: LocalDate) {
+            if (updater != null) return
+
+            update(date)
+            updater = Observable.interval(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { update(date) }
+        }
+
+        private fun updateDate(date: LocalDate) {
+            view.date.text = dateProcessor.getDate(date)
+        }
+    }
+
+    inner class SubjectViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+        private var updater: Disposable? = null
+        private var statusColor: Int = 0
+
+        fun bind(subject: SubjectModel) {
+            render(subject)
+
+            startUpdater(subject)
+        }
+
+        fun unbind() {
+            updater?.dispose()
+            updater = null
+        }
+
+        // Calls once
+        private fun render(subject: SubjectModel) {
+            view.subject.text = subjectProcessor.processSubjectName(subject)
+            view.startTime.text = subjectProcessor.processStartTime(subject)
+            view.endTime.text = subjectProcessor.processEndTime(subject)
+            view.cabinet.text = subjectProcessor.processCabinet(subject)
+
+            view.who.text = when (searchType) {
+                SearchType.BY_GROUP -> subjectProcessor.processTeacher(subject)
+                SearchType.BY_TEACHER -> subjectProcessor.processGroup(subject)
+                else -> throw NoSuchElementException("Can't associate search type with data")
+            }
+        }
+
+        // Calls parallel
+        private fun update(subject: SubjectModel) {
+            updateStatusColor(subject)
+
+            updateWaitTime(subject)
+            updateStatusLine()
+        }
+
+        private fun startUpdater(subject: SubjectModel) {
+            if (updater != null) return
+            update(subject)
+            updater = Observable.interval(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { update(subject) }
+        }
+
+        private fun updateWaitTime(subject: SubjectModel) {
+            val waitTime = timeProcessor.getWaitTime(subject.date, subject.startTime, subject.endTime)
+            if (waitTime == null) {
+                view.swaitTime.visibility = View.GONE
+            } else {
+                view.swaitTime.visibility = View.VISIBLE
+                view.swaitTime.text = waitTime.toString()
+                view.swaitTime.setTextColor(statusColor)
+            }
+        }
+
+        private fun updateStatusLine() {
+            view.statusLine.setBackgroundColor(statusColor)
+        }
+
+        private fun updateStatusColor(subject: SubjectModel) {
+            val status = timeProcessor.getIntervalStatus(subject.date, subject.startTime, subject.endTime)
+            val resources = App.applicationContext!!.resources
+            statusColor = when(status) {
+                IntervalStatus.ANOTHER_DAY -> resources.getColor(R.color.colorSubjectAnotherDay)
+                IntervalStatus.WILL_BE -> resources.getColor(R.color.colorSubjectWillBe)
+                IntervalStatus.IS_GOING -> resources.getColor(R.color.colorSubjectGoing)
+                IntervalStatus.GONE -> resources.getColor(R.color.colorSubjectGone)
+                else -> throw NoSuchElementException("Can't associate color with status of subject")
+            }
+        }
     }
 }

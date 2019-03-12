@@ -1,13 +1,13 @@
-package com.shepelevkirill.rksi.utils.processors
+package com.shepelevkirill.rksi.data.impl.processors
 
+import com.shepelevkirill.rksi.data.core.processors.DateProcessor
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
 
 
-class DateProcessor {
-    companion object {
-        fun getDate(date: LocalDate): String {
+class DateProcessorImpl : DateProcessor {
+    override fun getDate(date: LocalDate): String {
             val localDate: LocalDate = LocalDate.now()
             when (date.compareTo(localDate)) {
                 0 -> return "Сегодня"
@@ -16,8 +16,5 @@ class DateProcessor {
             }
             val formatter = DateTimeFormatter.ofPattern("d MMM, EEEE", Locale("ru"))
             return date.format(formatter)
-        }
-
-        fun isToday(date: LocalDate): Boolean = date.isEqual(LocalDate.now())
     }
 }

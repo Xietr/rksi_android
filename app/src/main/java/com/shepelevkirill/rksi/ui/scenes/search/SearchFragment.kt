@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.shepelevkirill.rksi.MvpFragment
 import com.shepelevkirill.rksi.R
@@ -35,6 +36,11 @@ class SearchFragment : MvpFragment(), SearchMvpView {
         setupGroupsSpinner()
         setupTeachersSpinner()
         setupSearchButtons()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.title = "Поиск"
     }
 
     private fun setupGroupsSpinner() {
@@ -76,6 +82,10 @@ class SearchFragment : MvpFragment(), SearchMvpView {
             .replace(R.id.fragment, viewer)
             .addToBackStack("SearchViewer")
             .commit()
+    }
+
+    override fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
 }

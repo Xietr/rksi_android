@@ -5,7 +5,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
 import com.shepelevkirill.rksi.data.core.repository.NetworkRepository
-import com.shepelevkirill.rksi.data.impl.repository.NetworkRepositoryImpl
 import com.shepelevkirill.rksi.di.AppModule
 import dagger.Module
 import dagger.Provides
@@ -86,7 +85,7 @@ object RetrofitModule {
     @Provides
     @Singleton
     fun provideCache(context: Context): Cache {
-        val cache = Cache(context.cacheDir, (1024 * 1024).toLong())
+        val cache = Cache(context.cacheDir, (1024 * 1024 * 10).toLong())
         return cache
     }
 
