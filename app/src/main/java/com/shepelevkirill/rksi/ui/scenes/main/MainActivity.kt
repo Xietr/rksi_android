@@ -27,6 +27,10 @@ class MainActivity : MvpAppCompatActivity(), MainMvpView {
                 presenter.onSettingsPressed()
                 return@OnNavigationItemSelectedListener true
             }
+            R.id.navigation_search -> {
+                presenter.onSearchPressed()
+                return@OnNavigationItemSelectedListener true
+            }
         }
         false
     }

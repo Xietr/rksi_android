@@ -8,6 +8,7 @@ import com.shepelevkirill.rksi.App
 import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.data.core.models.SubjectModel
 import com.shepelevkirill.rksi.utils.getString
+import com.shepelevkirill.rksi.utils.isToday
 import com.shepelevkirill.rksi.utils.processors.DateProcessor
 import com.shepelevkirill.rksi.utils.processors.TimeProcessor
 import io.reactivex.Observable

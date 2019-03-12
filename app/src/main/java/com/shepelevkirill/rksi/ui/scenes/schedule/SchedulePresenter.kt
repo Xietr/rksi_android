@@ -85,18 +85,22 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
             .subscribe(object: SingleObserver<List<ScheduleModel>> {
                 override fun onSubscribe(d: Disposable) {
                     scheduleLoader = d
+                    viewState.startRefreshing()
                 }
 
                 override fun onSuccess(t: List<ScheduleModel>) {
                     viewState.showSchedule(t)
 
-                    scheduleLoader!!.dispose()
+                    scheduleLoader?.dispose()
                     scheduleLoader = null
 
                     viewState.stopRefreshing()
                 }
 
                 override fun onError(e: Throwable) {
+                    scheduleLoader?.dispose()
+                    scheduleLoader = null
+
                     viewState.showError()
                     viewState.stopRefreshing()
                     viewState.showToast("Ошибка сети!")

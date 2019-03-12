@@ -11,6 +11,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.crashlytics.android.Crashlytics
 import com.shepelevkirill.rksi.MvpFragment
 import com.shepelevkirill.rksi.R
+import kotlinx.android.synthetic.main.fragment_intro_group_selection.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment : MvpFragment(), SettingsMvpView {
