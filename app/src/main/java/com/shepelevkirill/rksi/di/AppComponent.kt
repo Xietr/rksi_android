@@ -1,8 +1,10 @@
 package com.shepelevkirill.rksi.di
 
 import com.shepelevkirill.rksi.di.repository.DeserializersModule
+import com.shepelevkirill.rksi.di.repository.ProcessorsModule
 import com.shepelevkirill.rksi.di.repository.RepositoryModule
 import com.shepelevkirill.rksi.di.repository.RetrofitModule
+import com.shepelevkirill.rksi.ui.adapters.ScheduleAdapter
 import com.shepelevkirill.rksi.ui.scenes.intro.IntroActivity
 import com.shepelevkirill.rksi.ui.scenes.intro.IntroGroupSelectionFragment
 import com.shepelevkirill.rksi.ui.scenes.schedule.SchedulePresenter
@@ -21,6 +23,8 @@ interface AppComponent {
     fun inject(fragment: IntroGroupSelectionFragment)
     fun inject(activity: IntroActivity)
 
+    fun inject(adapter: ScheduleAdapter)
+
     @Component.Builder
     interface Builder {
         fun build(): AppComponent
@@ -28,5 +32,6 @@ interface AppComponent {
         fun deserializersModule(deserializers: DeserializersModule): Builder
         fun retrofitModule(retrofit: RetrofitModule): Builder
         fun repositoryModule(repository: RepositoryModule): Builder
+        fun processorsModule(processors: ProcessorsModule): Builder
     }
 }

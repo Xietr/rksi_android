@@ -7,6 +7,7 @@ import com.shepelevkirill.rksi.di.AppComponent
 import com.shepelevkirill.rksi.di.AppModule
 import com.shepelevkirill.rksi.di.DaggerAppComponent
 import com.shepelevkirill.rksi.di.repository.DeserializersModule
+import com.shepelevkirill.rksi.di.repository.ProcessorsModule
 import com.shepelevkirill.rksi.di.repository.RepositoryModule
 import com.shepelevkirill.rksi.di.repository.RetrofitModule
 
@@ -19,12 +20,13 @@ class App: Application() {
         AndroidThreeTen.init(this);
     }
 
-    fun initAppComponent() {
+    private fun initAppComponent() {
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule)
             .deserializersModule(DeserializersModule)
             .retrofitModule(RetrofitModule)
             .repositoryModule(RepositoryModule)
+            .processorsModule(ProcessorsModule)
             .build()
     }
 

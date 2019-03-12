@@ -10,7 +10,7 @@ import com.shepelevkirill.rksi.data.core.models.SubjectModel
 import com.shepelevkirill.rksi.data.core.repository.PreferencesRepository
 import com.shepelevkirill.rksi.data.core.repository.ScheduleRepository
 import com.shepelevkirill.rksi.ui.adapters.ScheduleAdapter
-import com.shepelevkirill.rksi.utils.processors.DateProcessor
+import com.shepelevkirill.rksi.data.impl.processors.DateProcessorImpl
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -57,11 +57,11 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
 
         when(lastVisibleItem) {
             is SubjectModel -> {
-                val title = DateProcessor.getDate(lastVisibleItem.date) + " ($currentGroup)"
+                val title = DateProcessorImpl.getDate(lastVisibleItem.date) + " ($currentGroup)"
                 viewState.setTitle(title)
             }
             is LocalDate -> {
-                val title = DateProcessor.getDate(lastVisibleItem) + " ($currentGroup)"
+                val title = DateProcessorImpl.getDate(lastVisibleItem) + " ($currentGroup)"
                 viewState.setTitle(title)
             }
             else -> throw NoSuchElementException("Can't associate this with element")

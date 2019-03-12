@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shepelevkirill.rksi.App
 import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.data.core.models.SubjectModel
+import com.shepelevkirill.rksi.data.core.processors.SubjectProcessor
 import com.shepelevkirill.rksi.utils.getString
-import com.shepelevkirill.rksi.utils.isToday
-import com.shepelevkirill.rksi.utils.processors.DateProcessor
-import com.shepelevkirill.rksi.utils.processors.TimeProcessor
+import com.shepelevkirill.rksi.data.impl.processors.DateProcessorImpl
+import com.shepelevkirill.rksi.data.impl.processors.TimeProcessorImpl
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -19,9 +19,16 @@ import kotlinx.android.synthetic.main.item_date.view.*
 import kotlinx.android.synthetic.main.item_subject.view.*
 import org.threeten.bp.LocalDate
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val data: ArrayList<Any> = ArrayList()
+    @Inject
+    lateinit var subjectProcessor: SubjectProcessor
+
+    init {
+        App.appComponent.inject(this)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
@@ -74,7 +81,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class DateViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(date: LocalDate) {
-            view.date.text = DateProcessor.getDate(date)
+            view.date.text = DateProcessorImpl.getDate(date)
         }
     }
 
@@ -111,7 +118,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
         fun updateWaitTime(subject: SubjectModel) {
-            val waitTime = TimeProcessor.getWaitTime(subject.date, subject.startTime, subject.endTime)
+            val waitTime = TimeProcessorImpl.getWaitTime(subject.date, subject.startTime, subject.endTime)
             if (waitTime == "") {
                 view.swaitTime.visibility = View.GONE
             } else {
@@ -126,13 +133,13 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         fun updateStatusColor(subject: SubjectModel) {
-            val status = TimeProcessor.getSubjectStatus(subject.date, subject.startTime, subject.endTime)
+            val status = TimeProcessorImpl.getSubjectStatus(subject.date, subject.startTime, subject.endTime)
             val resources = App.applicationContext!!.resources
             statusColor = when(status) {
-                TimeProcessor.SubjectStatus.ANOTHER_DAY -> resources.getColor(R.color.colorSubjectAnotherDay)
-                TimeProcessor.SubjectStatus.WILL_BE -> resources.getColor(R.color.colorSubjectWillBe)
-                TimeProcessor.SubjectStatus.IS_GOING -> resources.getColor(R.color.colorSubjectGoing)
-                TimeProcessor.SubjectStatus.GONE -> resources.getColor(R.color.colorSubjectGone)
+                TimeProcessorImpl.IntervalStatus.ANOTHER_DAY -> resources.getColor(R.color.colorSubjectAnotherDay)
+                TimeProcessorImpl.IntervalStatus.WILL_BE -> resources.getColor(R.color.colorSubjectWillBe)
+                TimeProcessorImpl.IntervalStatus.IS_GOING -> resources.getColor(R.color.colorSubjectGoing)
+                TimeProcessorImpl.IntervalStatus.GONE -> resources.getColor(R.color.colorSubjectGone)
                 else -> throw NoSuchElementException("Can't associate color with status of subject")
             }
         }
