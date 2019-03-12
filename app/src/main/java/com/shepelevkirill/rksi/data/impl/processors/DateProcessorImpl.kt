@@ -10,6 +10,7 @@ class DateProcessorImpl : DateProcessor {
     override fun getDate(date: LocalDate): String {
             val localDate: LocalDate = LocalDate.now()
             when (date.compareTo(localDate)) {
+                -1 -> return "Вчера"
                 0 -> return "Сегодня"
                 1 -> return "Завтра"
                 2 -> return "Послезавтра"

@@ -33,6 +33,18 @@ class ScheduleAdapter(private val searchType: SearchType) : RecyclerView.Adapter
         App.appComponent.inject(this)
     }
 
+    override fun getItemCount(): Int {
+        return data.count()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (data[position]) {
+            is LocalDate -> ViewHolderType.DATE.id
+            is SubjectModel -> ViewHolderType.SUBJECT.id
+            else -> throw NoSuchElementException("Can't associate data with view")
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
             ViewHolderType.SUBJECT.id -> {
@@ -49,10 +61,6 @@ class ScheduleAdapter(private val searchType: SearchType) : RecyclerView.Adapter
         }
     }
 
-    override fun getItemCount(): Int {
-        return data.count()
-    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
             is SubjectViewHolder -> holder.bind(data[position] as SubjectModel)
@@ -66,14 +74,6 @@ class ScheduleAdapter(private val searchType: SearchType) : RecyclerView.Adapter
         when(holder) {
             is SubjectViewHolder -> holder.unbind()
             is DateViewHolder -> holder.unbind()
-        }
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return when (data[position]) {
-            is LocalDate -> ViewHolderType.DATE.id
-            is SubjectModel -> ViewHolderType.SUBJECT.id
-            else -> throw NoSuchElementException("Can't associate data with view")
         }
     }
 
@@ -118,7 +118,6 @@ class ScheduleAdapter(private val searchType: SearchType) : RecyclerView.Adapter
 
         fun bind(date: LocalDate) {
             render(date)
-
             startUpdater(date)
         }
 
@@ -158,7 +157,6 @@ class ScheduleAdapter(private val searchType: SearchType) : RecyclerView.Adapter
 
         fun bind(subject: SubjectModel) {
             render(subject)
-
             startUpdater(subject)
         }
 
