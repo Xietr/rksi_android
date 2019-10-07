@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.shepelevkirill.rksi.MvpFragment
 import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.data.core.enums.SearchType
-import com.shepelevkirill.rksi.ui.scenes.search.viewer.ViewerFragment
+import com.shepelevkirill.rksi.utils.setVisibility
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : MvpFragment(), SearchMvpView {
@@ -27,7 +28,11 @@ class SearchFragment : MvpFragment(), SearchMvpView {
         ArrayAdapter<String>(context!!, android.R.layout.simple_spinner_dropdown_item, teachers)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
@@ -44,6 +49,8 @@ class SearchFragment : MvpFragment(), SearchMvpView {
     }
 
     private fun setupGroupsSpinner() {
+        groupSelector.setTitle("Выберите группу")
+        groupSelector.setPositiveButton("Back")
         groupsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         groupSelector.apply {
             adapter = groupsAdapter
@@ -51,6 +58,8 @@ class SearchFragment : MvpFragment(), SearchMvpView {
     }
 
     private fun setupTeachersSpinner() {
+        teacherSelector.setTitle("Выберите преподавателя")
+        teacherSelector.setPositiveButton("Back")
         teachersAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         teacherSelector.apply {
             adapter = teachersAdapter
@@ -77,15 +86,19 @@ class SearchFragment : MvpFragment(), SearchMvpView {
     }
 
     override fun openViewerFragment(searchType: SearchType, searchFor: String) {
-        val viewer = ViewerFragment.newInstance(searchType, searchFor)
-        activity!!.supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment, viewer)
-            .addToBackStack("SearchViewer")
-            .commit()
+        val activity = SearchFragmentDirections.actionSearchToViewer(searchFor, searchType)
+        findNavController().navigate(activity)
     }
 
     override fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
+    override fun setIsGroupProgressBarVisible(isVisible: Boolean) {
+        settingsGroupProgressBar.setVisibility(isVisible)
+    }
+
+    override fun setIsTeacherProgressBarVisible(isVisible: Boolean) {
+        teacherProgressBar.setVisibility(isVisible)
+    }
 }

@@ -7,7 +7,8 @@ import com.shepelevkirill.rksi.data.core.enums.ApplicationMode
 import com.shepelevkirill.rksi.data.core.repository.PreferencesRepository
 
 class PreferencesRepositoryImpl(context: Context) : PreferencesRepository {
-    private var preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private var preferences: SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
 
     companion object {
         const val SELECTED_GROUP_KEY = "GROUP"

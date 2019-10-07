@@ -22,5 +22,6 @@ object ProcessorsModule {
 
     @Provides
     @Singleton
-    fun provideSubjectProcessor(timeProcessor: TimeProcessor): SubjectProcessor = SubjectProcessorImpl(timeProcessor)
+    fun provideSubjectProcessor(timeProcessor: TimeProcessor): SubjectProcessor =
+        SubjectProcessorImpl(timeProcessor)
 }

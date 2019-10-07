@@ -26,6 +26,7 @@ class SubjectProcessorImpl(private val timeProcessor: TimeProcessor) : SubjectPr
     override fun processEndTime(subject: SubjectModel): String = subject.endTime.getString()
 
     override fun processWaitTime(subject: SubjectModel): String? {
-        return timeProcessor.getWaitTime(subject.date, subject.startTime, subject.endTime)?.toString()
+        return timeProcessor.getWaitTime(subject.date, subject.startTime, subject.endTime)
+            ?.toString()
     }
 }

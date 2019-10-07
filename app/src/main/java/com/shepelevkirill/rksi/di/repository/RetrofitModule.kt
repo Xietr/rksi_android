@@ -26,7 +26,11 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(callAdapterFactory: CallAdapter.Factory, converterFactory: Converter.Factory, client: OkHttpClient): Retrofit {
+    fun provideRetrofit(
+        callAdapterFactory: CallAdapter.Factory,
+        converterFactory: Converter.Factory,
+        client: OkHttpClient
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl("http://rksi.ru/export/")
             .addCallAdapterFactory(callAdapterFactory)
@@ -61,7 +65,11 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideClient(interceptor: Interceptor, cache: Cache, networkRepository: NetworkRepository): OkHttpClient {
+    fun provideClient(
+        interceptor: Interceptor,
+        cache: Cache,
+        networkRepository: NetworkRepository
+    ): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -73,7 +81,10 @@ object RetrofitModule {
                 request = if (networkRepository.isNetworkAvailable()) {
                     request.newBuilder().header("Cache-Control", "public, max-age=5").build()
                 } else {
-                    request.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=${60 * 60 * 24 * 7}").build()
+                    request.newBuilder().header(
+                        "Cache-Control",
+                        "public, only-if-cached, max-stale=${60 * 60 * 24 * 7}"
+                    ).build()
                 }
                 it.proceed(request)
             }

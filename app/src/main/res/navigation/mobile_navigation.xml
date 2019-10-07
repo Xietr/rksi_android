@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/android_navigation"
+        app:startDestination="@+id/navigation_schedule">
+
+    <fragment
+            android:id="@+id/navigation_schedule"
+            android:name="com.shepelevkirill.rksi.ui.scenes.schedule.ScheduleFragment"
+            android:label="Расписание "
+            tools:layout="@layout/fragment_schedule">
+        <argument
+                android:name="scheduleFor"
+                app:argType="string" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/navigation_search"
+            android:name="com.shepelevkirill.rksi.ui.scenes.search.SearchFragment"
+            android:label="@string/title_search"
+            tools:layout="@layout/fragment_search">
+        <action
+                android:id="@+id/action_search_to_viewer"
+                app:destination="@id/navigation_search_viewer" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/navigation_search_viewer"
+            android:name="com.shepelevkirill.rksi.ui.scenes.search.viewer.ViewerFragment"
+            android:label="{searchFor}"
+            tools:layout="@layout/fragment_search_viewer">
+        <argument
+                android:name="searchFor"
+                app:argType="string" />
+        <argument
+                android:name="searchType"
+                app:argType="com.shepelevkirill.rksi.data.core.enums.SearchType" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/navigation_settings"
+            android:name="com.shepelevkirill.rksi.ui.scenes.settings.SettingsFragment"
+            android:label="@string/title_settings"
+            tools:layout="@layout/fragment_settings" />
+</navigation>
+
+        <!--android:label="@string/title_schedule"-->

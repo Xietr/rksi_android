@@ -1,8 +1,7 @@
 package com.shepelevkirill.rksi.ui.scenes.settings
 
 import com.arellomobile.mvp.MvpView
-import com.arellomobile.mvp.viewstate.strategy.OneExecutionStateStrategy
-import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy
+import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
 interface SettingsMvpView : MvpView {
@@ -14,4 +13,6 @@ interface SettingsMvpView : MvpView {
     fun showGroups(groups: List<String>)
     fun clearGroups()
 
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun setIsGroupProgressBarVisible(isVisible: Boolean)
 }

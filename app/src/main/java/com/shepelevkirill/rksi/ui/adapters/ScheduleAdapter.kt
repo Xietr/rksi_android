@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shepelevkirill.rksi.App
 import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.data.core.enums.SearchType
 import com.shepelevkirill.rksi.data.core.models.SubjectModel
@@ -12,6 +11,7 @@ import com.shepelevkirill.rksi.data.core.processors.DateProcessor
 import com.shepelevkirill.rksi.data.core.processors.SubjectProcessor
 import com.shepelevkirill.rksi.data.core.processors.TimeProcessor
 import com.shepelevkirill.rksi.data.core.processors.TimeProcessor.IntervalStatus
+import com.shepelevkirill.rksi.ui.scenes.App
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -22,10 +22,14 @@ import org.threeten.bp.LocalDate
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ScheduleAdapter(private val searchType: SearchType) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    @Inject lateinit var subjectProcessor: SubjectProcessor
-    @Inject lateinit var dateProcessor: DateProcessor
-    @Inject lateinit var timeProcessor: TimeProcessor
+class ScheduleAdapter(private val searchType: SearchType) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    @Inject
+    lateinit var subjectProcessor: SubjectProcessor
+    @Inject
+    lateinit var dateProcessor: DateProcessor
+    @Inject
+    lateinit var timeProcessor: TimeProcessor
 
     private val data: ArrayList<Any> = ArrayList()
 
@@ -46,7 +50,7 @@ class ScheduleAdapter(private val searchType: SearchType) : RecyclerView.Adapter
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
+        return when (viewType) {
             ViewHolderType.SUBJECT.id -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_subject, parent, false)
@@ -62,7 +66,7 @@ class ScheduleAdapter(private val searchType: SearchType) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder) {
+        when (holder) {
             is SubjectViewHolder -> holder.bind(data[position] as SubjectModel)
             is DateViewHolder -> holder.bind(data[position] as LocalDate)
             else -> throw NoSuchElementException("Can't associate data with view")
@@ -71,7 +75,7 @@ class ScheduleAdapter(private val searchType: SearchType) : RecyclerView.Adapter
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         super.onViewRecycled(holder)
-        when(holder) {
+        when (holder) {
             is SubjectViewHolder -> holder.unbind()
             is DateViewHolder -> holder.unbind()
         }
@@ -197,7 +201,8 @@ class ScheduleAdapter(private val searchType: SearchType) : RecyclerView.Adapter
         }
 
         private fun updateWaitTime(subject: SubjectModel) {
-            val waitTime = timeProcessor.getWaitTime(subject.date, subject.startTime, subject.endTime)
+            val waitTime =
+                timeProcessor.getWaitTime(subject.date, subject.startTime, subject.endTime)
             if (waitTime == null) {
                 view.swaitTime.visibility = View.GONE
             } else {
@@ -212,9 +217,10 @@ class ScheduleAdapter(private val searchType: SearchType) : RecyclerView.Adapter
         }
 
         private fun updateStatusColor(subject: SubjectModel) {
-            val status = timeProcessor.getIntervalStatus(subject.date, subject.startTime, subject.endTime)
+            val status =
+                timeProcessor.getIntervalStatus(subject.date, subject.startTime, subject.endTime)
             val resources = App.applicationContext!!.resources
-            statusColor = when(status) {
+            statusColor = when (status) {
                 IntervalStatus.ANOTHER_DAY -> resources.getColor(R.color.colorSubjectAnotherDay)
                 IntervalStatus.WILL_BE -> resources.getColor(R.color.colorSubjectWillBe)
                 IntervalStatus.IS_GOING -> resources.getColor(R.color.colorSubjectGoing)

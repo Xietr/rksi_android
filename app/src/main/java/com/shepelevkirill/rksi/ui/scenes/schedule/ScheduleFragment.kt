@@ -16,11 +16,16 @@ import com.shepelevkirill.rksi.ui.adapters.ScheduleAdapter
 import kotlinx.android.synthetic.main.fragment_schedule.*
 
 class ScheduleFragment : MvpFragment(), ScheduleMvpView {
-    @InjectPresenter lateinit var presenter: SchedulePresenter
+    @InjectPresenter
+    lateinit var presenter: SchedulePresenter
 
     private val scheduleAdapter: ScheduleAdapter = ScheduleAdapter(SearchType.BY_GROUP)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_schedule, container, false)
     }
 
@@ -55,7 +60,7 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
         }
     }
 
-    private val onScrollListener = object: RecyclerView.OnScrollListener() {
+    private val onScrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
             presenter.onScrolled(recyclerView)

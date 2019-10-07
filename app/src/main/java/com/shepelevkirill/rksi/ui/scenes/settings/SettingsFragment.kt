@@ -11,7 +11,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.crashlytics.android.Crashlytics
 import com.shepelevkirill.rksi.MvpFragment
 import com.shepelevkirill.rksi.R
-import kotlinx.android.synthetic.main.fragment_intro_group_selection.*
+import com.shepelevkirill.rksi.utils.setVisibility
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment : MvpFragment(), SettingsMvpView {
@@ -29,7 +29,11 @@ class SettingsFragment : MvpFragment(), SettingsMvpView {
         activity!!.title = "Настройки"
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_settings, container, false)
     }
 
@@ -40,13 +44,20 @@ class SettingsFragment : MvpFragment(), SettingsMvpView {
     }
 
     private fun setupSpinner() {
+        groupSelector.setTitle("Выберите группу")
+        groupSelector.setPositiveButton("Back")
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         groupSelector.adapter = adapter
-        groupSelector.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+        groupSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 if (isFirstSelection) {
                     isFirstSelection = false
                     return
@@ -85,5 +96,9 @@ class SettingsFragment : MvpFragment(), SettingsMvpView {
     override fun clearGroups() {
         data.clear()
         adapter.notifyDataSetChanged()
+    }
+
+    override fun setIsGroupProgressBarVisible(isVisible: Boolean) {
+        settingsGroupProgressBar.setVisibility(isVisible)
     }
 }

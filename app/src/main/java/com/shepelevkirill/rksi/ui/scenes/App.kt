@@ -1,4 +1,4 @@
-package com.shepelevkirill.rksi
+package com.shepelevkirill.rksi.ui.scenes
 
 import android.app.Application
 import android.content.Context
@@ -11,13 +11,13 @@ import com.shepelevkirill.rksi.di.repository.ProcessorsModule
 import com.shepelevkirill.rksi.di.repository.RepositoryModule
 import com.shepelevkirill.rksi.di.repository.RetrofitModule
 
-class App: Application() {
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        App.applicationContext = applicationContext
+        Companion.applicationContext = applicationContext
         initAppComponent()
-        AndroidThreeTen.init(this);
+        AndroidThreeTen.init(this)
     }
 
     private fun initAppComponent() {

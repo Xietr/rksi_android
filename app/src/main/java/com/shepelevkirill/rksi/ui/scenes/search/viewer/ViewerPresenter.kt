@@ -2,10 +2,10 @@ package com.shepelevkirill.rksi.ui.scenes.search.viewer
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.shepelevkirill.rksi.App
 import com.shepelevkirill.rksi.data.core.enums.SearchType
 import com.shepelevkirill.rksi.data.core.models.ScheduleModel
 import com.shepelevkirill.rksi.data.core.repository.ScheduleRepository
+import com.shepelevkirill.rksi.ui.scenes.App
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,7 +15,8 @@ import javax.inject.Inject
 
 @InjectViewState
 class ViewerPresenter : MvpPresenter<ViewerMvpView>() {
-    @Inject lateinit var scheduleRepository: ScheduleRepository
+    @Inject
+    lateinit var scheduleRepository: ScheduleRepository
 
     private var searchType: SearchType = SearchType.NONE
     private var searchFor: String = ""
@@ -38,7 +39,7 @@ class ViewerPresenter : MvpPresenter<ViewerMvpView>() {
         getScheduleLoader()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object: SingleObserver<List<ScheduleModel>> {
+            .subscribe(object : SingleObserver<List<ScheduleModel>> {
                 override fun onSuccess(t: List<ScheduleModel>) {
                     viewState.addSchedule(t)
                     scheduleLoader?.dispose()

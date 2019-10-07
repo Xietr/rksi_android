@@ -4,14 +4,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.shepelevkirill.rksi.App
 import com.shepelevkirill.rksi.data.core.models.ScheduleModel
 import com.shepelevkirill.rksi.data.core.models.SubjectModel
 import com.shepelevkirill.rksi.data.core.processors.DateProcessor
 import com.shepelevkirill.rksi.data.core.repository.PreferencesRepository
 import com.shepelevkirill.rksi.data.core.repository.ScheduleRepository
 import com.shepelevkirill.rksi.ui.adapters.ScheduleAdapter
-import com.shepelevkirill.rksi.data.impl.processors.DateProcessorImpl
+import com.shepelevkirill.rksi.ui.scenes.App
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -22,9 +21,12 @@ import javax.inject.Inject
 
 @InjectViewState
 class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
-    @Inject lateinit var scheduleRepository: ScheduleRepository
-    @Inject lateinit var preferencesRepository: PreferencesRepository
-    @Inject lateinit var dateProcessor: DateProcessor
+    @Inject
+    lateinit var scheduleRepository: ScheduleRepository
+    @Inject
+    lateinit var preferencesRepository: PreferencesRepository
+    @Inject
+    lateinit var dateProcessor: DateProcessor
 
     private var currentGroup = ""
     private var scheduleLoader: Disposable? = null
@@ -41,9 +43,17 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
         }
     }
 
+    override fun onFirstViewAttach() {
+
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         scheduleLoader?.dispose()
+    }
+
+    private fun setTitle(scheduleFor: String) {
+
     }
 
     fun onScrolled(recyclerView: RecyclerView) {
@@ -57,7 +67,7 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
 
         val lastVisibleItem = adapter.get(lastVisibleItemPos)
 
-        when(lastVisibleItem) {
+        when (lastVisibleItem) {
             is SubjectModel -> {
                 val title = dateProcessor.getDate(lastVisibleItem.date) + " ($currentGroup)"
                 viewState.setTitle(title)
@@ -84,7 +94,7 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
         scheduleRepository.getScheduleForGroup(currentGroup)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object: SingleObserver<List<ScheduleModel>> {
+            .subscribe(object : SingleObserver<List<ScheduleModel>> {
                 override fun onSubscribe(d: Disposable) {
                     scheduleLoader = d
                     viewState.startRefreshing()

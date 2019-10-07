@@ -29,9 +29,11 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providePreferencesRepository(context: Context): PreferencesRepository = PreferencesRepositoryImpl(context)
+    fun providePreferencesRepository(context: Context): PreferencesRepository =
+        PreferencesRepositoryImpl(context)
 
     @Provides
     @Singleton
-    fun provideNetworkRepository(context: Context): NetworkRepository = NetworkRepositoryImpl(context)
+    fun provideNetworkRepository(context: Context): NetworkRepository =
+        NetworkRepositoryImpl(context)
 }

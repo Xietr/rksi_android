@@ -1,7 +1,7 @@
 package com.shepelevkirill.rksi.di
 
 import android.content.Context
-import com.shepelevkirill.rksi.App
+import com.shepelevkirill.rksi.ui.scenes.App
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -10,7 +10,8 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideApplication(): App.Companion = App
+    fun provideApplication(): App.Companion =
+        App
 
     @Provides
     @Singleton

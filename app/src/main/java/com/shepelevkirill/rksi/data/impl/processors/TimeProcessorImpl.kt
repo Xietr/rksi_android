@@ -37,7 +37,11 @@ class TimeProcessorImpl : TimeProcessor {
         }
     }
 
-    override fun getIntervalStatus(date: LocalDate, startTime: LocalTime, endTime: LocalTime): IntervalStatus {
+    override fun getIntervalStatus(
+        date: LocalDate,
+        startTime: LocalTime,
+        endTime: LocalTime
+    ): IntervalStatus {
         val currentTime = LocalTime.now()
         val currentDate = LocalDate.now()
 

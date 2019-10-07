@@ -7,7 +7,7 @@ enum class ApplicationMode(val id: Int) {
 
     companion object {
         fun getFromId(id: Int): ApplicationMode {
-            return when(id) {
+            return when (id) {
                 ApplicationMode.GROUP_MODE.id -> ApplicationMode.GROUP_MODE
                 ApplicationMode.TEACHER_MODE.id -> ApplicationMode.TEACHER_MODE
                 else -> ApplicationMode.NONE

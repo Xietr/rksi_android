@@ -15,25 +15,32 @@ import com.shepelevkirill.rksi.ui.adapters.ScheduleAdapter
 import kotlinx.android.synthetic.main.fragment_search_viewer.*
 
 class ViewerFragment : MvpFragment(), ViewerMvpView {
-    @InjectPresenter lateinit var presenter: ViewerPresenter
+    @InjectPresenter
+    lateinit var presenter: ViewerPresenter
 
     private var searchType: SearchType = SearchType.NONE
     private var searchFor: String = ""
 
     private lateinit var scheduleAdapter: ScheduleAdapter
-//    private val scheduleAdapter by lazy {
+    //    private val scheduleAdapter by lazy {
 //        ScheduleAdapter(searchType)
 //    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity!!.title = arguments?.getString("SearchFor")
-        searchType = arguments?.getSerializable("SearchType") as SearchType
-        searchFor = arguments!!.getString("SearchFor")
+        arguments?.let {
+            val args = ViewerFragmentArgs.fromBundle(it)
+            searchFor = args.searchFor
+            searchType = args.searchType
+        }
 
         scheduleAdapter = ScheduleAdapter(searchType)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_search_viewer, container, false)
     }
 
