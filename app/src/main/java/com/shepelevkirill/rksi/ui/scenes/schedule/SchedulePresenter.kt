@@ -43,17 +43,9 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
         }
     }
 
-    override fun onFirstViewAttach() {
-
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         scheduleLoader?.dispose()
-    }
-
-    private fun setTitle(scheduleFor: String) {
-
     }
 
     fun onScrolled(recyclerView: RecyclerView) {
