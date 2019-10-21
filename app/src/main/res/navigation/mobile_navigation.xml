@@ -8,18 +8,11 @@
     <fragment
             android:id="@+id/navigation_schedule"
             android:name="com.shepelevkirill.rksi.ui.scenes.schedule.ScheduleFragment"
-            android:label="Расписание"
-            tools:layout="@layout/fragment_schedule">
-
-        <action
-                android:id="@+id/action_navigation_self"
-                app:destination="@id/navigation_schedule" />
-    </fragment>
+            tools:layout="@layout/fragment_schedule"/>
 
     <fragment
             android:id="@+id/navigation_search"
             android:name="com.shepelevkirill.rksi.ui.scenes.search.SearchFragment"
-            android:label="@string/title_search"
             tools:layout="@layout/fragment_search">
         <action
                 android:id="@+id/action_search_to_viewer"
@@ -29,7 +22,6 @@
     <fragment
             android:id="@+id/navigation_search_viewer"
             android:name="com.shepelevkirill.rksi.ui.scenes.search.viewer.ViewerFragment"
-            android:label="{searchFor}"
             tools:layout="@layout/fragment_search_viewer">
         <argument
                 android:name="searchFor"
@@ -42,7 +34,6 @@
     <fragment
             android:id="@+id/navigation_settings"
             android:name="com.shepelevkirill.rksi.ui.scenes.settings.SettingsFragment"
-            android:label="@string/title_settings"
             tools:layout="@layout/fragment_settings" />
 </navigation>
 

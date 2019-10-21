@@ -12,6 +12,7 @@ import com.shepelevkirill.rksi.MvpFragment
 import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.data.core.enums.SearchType
 import com.shepelevkirill.rksi.utils.setVisibility
+import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : MvpFragment(), SearchMvpView {
@@ -41,11 +42,12 @@ class SearchFragment : MvpFragment(), SearchMvpView {
         setupGroupsSpinner()
         setupTeachersSpinner()
         setupSearchButtons()
+        activity?.toolbar?.title = "Поиск"
     }
 
     override fun onResume() {
         super.onResume()
-        activity?.title = "Поиск"
+        activity?.toolbar?.title = "Поиск"
     }
 
     private fun setupGroupsSpinner() {

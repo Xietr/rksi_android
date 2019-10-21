@@ -49,7 +49,7 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
     }
 
     fun onScrolled(recyclerView: RecyclerView) {
-        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+/*        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
         val adapter = recyclerView.adapter as ScheduleAdapter
 
         val lastVisibleItemPos = layoutManager.findFirstCompletelyVisibleItemPosition()
@@ -69,7 +69,7 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
                 viewState.setTitle(title)
             }
             else -> throw NoSuchElementException("Can't associate this with element")
-        }
+        }*/
     }
 
     fun onRefresh() {

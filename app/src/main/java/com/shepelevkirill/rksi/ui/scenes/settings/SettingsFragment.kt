@@ -12,6 +12,7 @@ import com.crashlytics.android.Crashlytics
 import com.shepelevkirill.rksi.MvpFragment
 import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.utils.setVisibility
+import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment : MvpFragment(), SettingsMvpView {
@@ -23,11 +24,6 @@ class SettingsFragment : MvpFragment(), SettingsMvpView {
         ArrayAdapter<String>(context!!, android.R.layout.simple_spinner_dropdown_item, data)
     }
     private var isFirstSelection = true
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity!!.title = "Настройки"
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +37,7 @@ class SettingsFragment : MvpFragment(), SettingsMvpView {
         super.onViewCreated(view, savedInstanceState)
         setupSpinner()
         presenter.onResume()
+        activity?.toolbar?.title = "Настройки"
     }
 
     private fun setupSpinner() {

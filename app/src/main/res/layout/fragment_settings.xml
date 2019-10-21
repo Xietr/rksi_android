@@ -38,4 +38,5 @@
             app:layout_constraintEnd_toEndOf="@+id/groupSelector"
             app:layout_constraintStart_toStartOf="@+id/groupSelector"
             app:layout_constraintTop_toTopOf="@+id/groupSelector" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

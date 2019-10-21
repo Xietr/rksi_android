@@ -12,6 +12,7 @@ import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.data.core.enums.SearchType
 import com.shepelevkirill.rksi.data.core.models.ScheduleModel
 import com.shepelevkirill.rksi.ui.adapters.ScheduleAdapter
+import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_search_viewer.*
 
 class ViewerFragment : MvpFragment(), ViewerMvpView {
@@ -47,6 +48,7 @@ class ViewerFragment : MvpFragment(), ViewerMvpView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        activity?.toolbar?.title = searchFor
     }
 
     override fun onResume() {

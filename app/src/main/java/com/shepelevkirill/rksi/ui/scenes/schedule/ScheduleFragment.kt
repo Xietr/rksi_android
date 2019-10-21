@@ -13,6 +13,7 @@ import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.data.core.enums.SearchType
 import com.shepelevkirill.rksi.data.core.models.ScheduleModel
 import com.shepelevkirill.rksi.ui.adapters.ScheduleAdapter
+import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 
 class ScheduleFragment : MvpFragment(), ScheduleMvpView {
@@ -33,12 +34,13 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupSwipeRefreshLayout()
+        setTitle("GIKOFHJDWUG")
     }
 
     override fun onResume() {
         super.onResume()
         scheduleAdapter.refresh()
-        activity?.title = "Расписание"
+        //activity?.title = "Расписание"
 
         presenter.onResume()
     }
@@ -68,7 +70,7 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
     }
 
     override fun setTitle(title: String) {
-        activity!!.title = title
+        activity?.toolbar?.title = "Расписание"
     }
 
     override fun showToast(message: String) {
