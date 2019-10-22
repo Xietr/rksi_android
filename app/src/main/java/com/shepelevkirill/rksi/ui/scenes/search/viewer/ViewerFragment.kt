@@ -57,7 +57,7 @@ class ViewerFragment : MvpFragment(), ViewerMvpView {
     }
 
     private fun setupRecyclerView() {
-        recyclerView.apply {
+        scheduleRecyclerView.apply {
             adapter = scheduleAdapter
             layoutManager = LinearLayoutManager(view!!.context)
             setHasFixedSize(true)

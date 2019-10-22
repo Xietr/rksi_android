@@ -11,6 +11,7 @@ import com.shepelevkirill.rksi.data.core.processors.DateProcessor
 import com.shepelevkirill.rksi.data.core.processors.SubjectProcessor
 import com.shepelevkirill.rksi.data.core.processors.TimeProcessor
 import com.shepelevkirill.rksi.data.core.processors.TimeProcessor.IntervalStatus
+import com.shepelevkirill.rksi.ui.decorators.StickHeaderItemDecoration
 import com.shepelevkirill.rksi.ui.scenes.App
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,7 +24,9 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ScheduleAdapter(private val searchType: SearchType) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(),
+    StickHeaderItemDecoration.StickyHeaderInterface {
+
     @Inject
     lateinit var subjectProcessor: SubjectProcessor
     @Inject
@@ -79,6 +82,36 @@ class ScheduleAdapter(private val searchType: SearchType) :
             is SubjectViewHolder -> holder.unbind()
             is DateViewHolder -> holder.unbind()
         }
+    }
+
+    override fun getHeaderPositionForItem(itemPosition: Int): Int {
+        var headerPosition = 0
+        do {
+            if (this.isHeader(itemPosition)) {
+                headerPosition = itemPosition
+                break
+            }
+            headerPosition--
+            //itemPosition -= 1
+        } while (headerPosition >= 0)
+        return headerPosition
+    }
+
+    override fun getHeaderLayout(headerPosition: Int): Int =
+        R.layout.item_date
+
+    override fun bindHeaderData(header: View, headerPosition: Int) {
+/*        when (header) {
+            is SubjectViewHolder -> header.bind(data[headerPosition] as SubjectModel)
+            is DateViewHolder -> header.bind(data[headerPosition] as LocalDate)
+            else -> throw NoSuchElementException("Can't associate data with view")
+        }*/
+        if (headerPosition < 0) return
+        else header.date.text = dateProcessor.getDate(data[headerPosition] as LocalDate)
+    }
+
+    override fun isHeader(itemPosition: Int): Boolean {
+        return data[itemPosition] == ViewHolderType.DATE || data[itemPosition] == ViewHolderType.SUBJECT
     }
 
     fun add(subject: SubjectModel) {

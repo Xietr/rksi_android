@@ -1,22 +1,16 @@
 package com.shepelevkirill.rksi.ui.scenes.schedule
 
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.shepelevkirill.rksi.data.core.models.ScheduleModel
-import com.shepelevkirill.rksi.data.core.models.SubjectModel
 import com.shepelevkirill.rksi.data.core.processors.DateProcessor
 import com.shepelevkirill.rksi.data.core.repository.PreferencesRepository
 import com.shepelevkirill.rksi.data.core.repository.ScheduleRepository
-import com.shepelevkirill.rksi.ui.adapters.ScheduleAdapter
 import com.shepelevkirill.rksi.ui.scenes.App
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import org.threeten.bp.LocalDate
-import java.util.*
 import javax.inject.Inject
 
 @InjectViewState
@@ -46,30 +40,6 @@ class SchedulePresenter : MvpPresenter<ScheduleMvpView>() {
     override fun onDestroy() {
         super.onDestroy()
         scheduleLoader?.dispose()
-    }
-
-    fun onScrolled(recyclerView: RecyclerView) {
-/*        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-        val adapter = recyclerView.adapter as ScheduleAdapter
-
-        val lastVisibleItemPos = layoutManager.findFirstCompletelyVisibleItemPosition()
-        if (lastVisibleItemPos < 0) {
-            return
-        }
-
-        val lastVisibleItem = adapter.get(lastVisibleItemPos)
-
-        when (lastVisibleItem) {
-            is SubjectModel -> {
-                val title = dateProcessor.getDate(lastVisibleItem.date) + " ($currentGroup)"
-                viewState.setTitle(title)
-            }
-            is LocalDate -> {
-                val title = dateProcessor.getDate(lastVisibleItem) + " ($currentGroup)"
-                viewState.setTitle(title)
-            }
-            else -> throw NoSuchElementException("Can't associate this with element")
-        }*/
     }
 
     fun onRefresh() {

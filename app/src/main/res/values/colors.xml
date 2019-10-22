@@ -9,7 +9,7 @@
     <color name="colorNavBarUnchecked">#c0c3ca</color>
     <color name="colorNavBarChecked">#4d92fd</color>
 
-    <color name="colorBackground">#ffffff</color>
+    <color name="white">#ffffff</color>
     <color name="colorCardBackground">#f7f7f7</color>
 
     <color name="colorDateText">#666666</color>

@@ -1,4 +1,4 @@
-package com.shepelevkirill.rksi.ui.listeners
+package com.shepelevkirill.rksi.ui.behaviors
 
 import android.content.Context
 import android.util.AttributeSet

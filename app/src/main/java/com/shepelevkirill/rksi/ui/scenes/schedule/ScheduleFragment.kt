@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.shepelevkirill.rksi.MvpFragment
 import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.data.core.enums.SearchType
 import com.shepelevkirill.rksi.data.core.models.ScheduleModel
 import com.shepelevkirill.rksi.ui.adapters.ScheduleAdapter
+import com.shepelevkirill.rksi.ui.decorators.StickHeaderItemDecoration
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 
@@ -34,7 +34,7 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupSwipeRefreshLayout()
-        setTitle("GIKOFHJDWUG")
+        setTitle("")
     }
 
     override fun onResume() {
@@ -46,11 +46,11 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
     }
 
     private fun setupRecyclerView() {
-        recyclerView.apply {
+        scheduleRecyclerView.apply {
             adapter = scheduleAdapter
             layoutManager = LinearLayoutManager(view!!.context)
             setHasFixedSize(true)
-            setOnScrollListener(onScrollListener)
+            addItemDecoration(StickHeaderItemDecoration(adapter as ScheduleAdapter))
         }
     }
 
@@ -59,13 +59,6 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
         swipeRefreshLayout.setColorSchemeColors(color)
         swipeRefreshLayout.setOnRefreshListener {
             presenter.onRefresh()
-        }
-    }
-
-    private val onScrollListener = object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-            presenter.onScrolled(recyclerView)
         }
     }
 

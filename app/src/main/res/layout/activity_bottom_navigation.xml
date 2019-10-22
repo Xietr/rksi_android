@@ -43,11 +43,7 @@
             android:layout_gravity="bottom"
             app:layout_anchor="@+id/nav_host_fragment"
             app:layout_anchorGravity="bottom|center"
-            app:layout_behavior=".ui.listeners.BottomNavigationBehavior"
+            app:layout_behavior=".ui.behaviors.BottomNavigationBehavior"
             app:menu="@menu/bottom_nav_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <!--            app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"-->

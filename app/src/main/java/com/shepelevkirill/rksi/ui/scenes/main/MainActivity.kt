@@ -9,7 +9,6 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.shepelevkirill.rksi.R
-import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 
 class MainActivity : MvpAppCompatActivity(), MainMvpView {
 
