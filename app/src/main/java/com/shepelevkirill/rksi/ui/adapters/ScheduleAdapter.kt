@@ -85,14 +85,12 @@ class ScheduleAdapter(private val searchType: SearchType) :
     }
 
     override fun getHeaderPositionForItem(itemPosition: Int): Int {
-        var headerPosition = 0
+        var headerPosition = itemPosition
         do {
-            if (this.isHeader(itemPosition)) {
-                headerPosition = itemPosition
+            if (this.isHeader(headerPosition)) {
                 break
             }
             headerPosition--
-            //itemPosition -= 1
         } while (headerPosition >= 0)
         return headerPosition
     }
@@ -101,17 +99,19 @@ class ScheduleAdapter(private val searchType: SearchType) :
         R.layout.item_date
 
     override fun bindHeaderData(header: View, headerPosition: Int) {
-/*        when (header) {
-            is SubjectViewHolder -> header.bind(data[headerPosition] as SubjectModel)
-            is DateViewHolder -> header.bind(data[headerPosition] as LocalDate)
-            else -> throw NoSuchElementException("Can't associate data with view")
-        }*/
-        if (headerPosition < 0) return
-        else header.date.text = dateProcessor.getDate(data[headerPosition] as LocalDate)
+        var localDate: Int = 0
+
+        if (headerPosition >= 0) {
+            if (data[headerPosition] is LocalDate) {
+                localDate = headerPosition
+            }
+
+            header.date.text = dateProcessor.getDate(data[localDate] as LocalDate)
+        }
     }
 
     override fun isHeader(itemPosition: Int): Boolean {
-        return data[itemPosition] == ViewHolderType.DATE || data[itemPosition] == ViewHolderType.SUBJECT
+        return data[itemPosition] is LocalDate
     }
 
     fun add(subject: SubjectModel) {

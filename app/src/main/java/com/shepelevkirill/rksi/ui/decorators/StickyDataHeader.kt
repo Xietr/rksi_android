@@ -72,7 +72,7 @@ class StickHeaderItemDecoration(private val mListener: StickyHeaderInterface) :
 
             //measure height tolerance with child if child is another header
             if (currentHeaderPos != i) {
-                val isChildHeader = mListener.isHeader(parent.getChildAdapterPosition(child))
+                val isChildHeader = mListener.isHeader(1)//(parent.getChildAdapterPosition(child))
                 if (isChildHeader) {
                     heightTolerance = mStickyHeaderHeight - child.height
                 }
