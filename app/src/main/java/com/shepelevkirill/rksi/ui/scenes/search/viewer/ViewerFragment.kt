@@ -12,6 +12,8 @@ import com.shepelevkirill.rksi.R
 import com.shepelevkirill.rksi.data.core.enums.SearchType
 import com.shepelevkirill.rksi.data.core.models.ScheduleModel
 import com.shepelevkirill.rksi.ui.adapters.ScheduleAdapter
+import com.shepelevkirill.rksi.ui.decorators.StickHeaderItemDecoration
+import com.shepelevkirill.rksi.ui.scenes.schedule.ScheduleFragment
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_search_viewer.*
 
@@ -61,7 +63,7 @@ class ViewerFragment : MvpFragment(), ViewerMvpView {
             adapter = scheduleAdapter
             layoutManager = LinearLayoutManager(view!!.context)
             setHasFixedSize(true)
-            // TODO ON SCROLL LISTENER
+            addItemDecoration(StickHeaderItemDecoration(adapter as ScheduleAdapter))
         }
     }
 

@@ -99,7 +99,7 @@ class ScheduleAdapter(private val searchType: SearchType) :
         R.layout.item_date
 
     override fun bindHeaderData(header: View, headerPosition: Int) {
-        var localDate: Int = 0
+        var localDate = 0
 
         if (headerPosition >= 0) {
             if (data[headerPosition] is LocalDate) {

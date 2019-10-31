@@ -4,7 +4,7 @@ import com.arellomobile.mvp.MvpView
 import com.shepelevkirill.rksi.data.core.models.ScheduleModel
 
 interface ScheduleMvpView : MvpView {
-    fun setTitle(title: String)
+    fun setTitle()
 
     fun showSchedule(schedule: List<ScheduleModel>)
     fun clearSchedule()

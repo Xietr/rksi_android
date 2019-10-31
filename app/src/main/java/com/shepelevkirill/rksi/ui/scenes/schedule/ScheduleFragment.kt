@@ -34,7 +34,7 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupSwipeRefreshLayout()
-        setTitle("")
+        setTitle()
     }
 
     override fun onResume() {
@@ -62,7 +62,7 @@ class ScheduleFragment : MvpFragment(), ScheduleMvpView {
         }
     }
 
-    override fun setTitle(title: String) {
+    override fun setTitle() {
         activity?.toolbar?.title = "Расписание"
     }
 

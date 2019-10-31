@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : MvpFragment(), SearchMvpView {
+
     @InjectPresenter
     lateinit var presenter: SearchPresenter
 

@@ -87,16 +87,17 @@ class StickHeaderItemDecoration(private val mListener: StickyHeaderInterface) :
             }
 
             if (childBottomPosition > contactPoint) {
-                if (child.top <= contactPoint) {
+                isChildTopIsLowerThanContactPoint(child.top, contactPoint)
                     // This child overlaps the contactPoint
                     childInContact = child
                     break
-                }
             }
         }
         return childInContact
     }
 
+    private fun isChildTopIsLowerThanContactPoint(childTop: Int, contactPoint: Int): Boolean =
+         (childTop <= contactPoint)
 
     /**
      * Properly measures and layouts the top sticky header.

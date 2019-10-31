@@ -46,8 +46,7 @@ class SettingsFragment : MvpFragment(), SettingsMvpView {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         groupSelector.adapter = adapter
         groupSelector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
 
             override fun onItemSelected(
                 parent: AdapterView<*>?,
